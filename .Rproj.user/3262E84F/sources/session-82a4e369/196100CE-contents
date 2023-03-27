@@ -1,9 +1,7 @@
 ---
-title: "About this blog"
+title: "About this analysis"
 description: |
-  Some additional details about the blog
+  
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
+This website is a work in progress to document my CANDO+P analysis work in a somewhat cohesive way. I am particularly interested in being able to browse through R Markdown documents after they've been produced.
