@@ -14,18 +14,16 @@ output:
 ---
 
 
+```{r function and package set up, message = FALSE}
 
-```{r function imports, message = FALSE}
-
+# functions
 source("./scripts/cycle_parsing.R")
 
-```
-
-
-```{r packages, message = FALSE}
+# packages
 library(MetBrewer)
 library(ggplot2)
 library(dplyr)
+
 ```
 
 
@@ -38,30 +36,26 @@ df <- cycle_parse(file_path, choose_date)
 
 
 
-```{r theme defaults - colors and shapes}
-
-theme_defaults <- list(
-  theme_classic(),
-  theme(legend.position="top", plot.title = element_text(face = "bold")))
+```{r plotting params - phase labels and lines}
 
 
-```
-
-
-
-```{r phase labels and lines}
+ylim_custom <- 100 # set this after looking at the plot
 
 phase_lines <- list(
   geom_vline(xintercept=1.65,color="grey"),
   geom_vline(xintercept=3.63,color="grey"))
 
-ylim_custom <- 100 # set this after looking at the plot
 
 phase_labs <- list(
   annotate("text", x=0.75, y=ylim_custom, label="anaerobic"),
   annotate("text", x=2.6, y=ylim_custom, label="anoxic"),
   annotate("text", x=4.5, y=ylim_custom, label="aerobic")
 )
+
+
+theme_defaults <- list(
+  theme_classic(),
+  theme(legend.position="top", plot.title = element_text(face = "bold")))
 
 
 ```

@@ -1,22 +1,17 @@
 ---
-title: "March 23 2023"
+title: "March 13 2023"
 description: |
-  In-cycle sampling on Thursday, March 23 2023
+  In-cycle sampling on Monday, March 13th 2023
 categories:
   - in-cycle
 author:
   - name: McKenna Farmer
-date: 2023-03-23
+date: 2023-03-13
 output:
   distill::distill_article:
-    self_contained: true
+    self_contained: false
+    code_folding: true
 ---
-
-# In-cycle sampling summary
-
-Operational changes:
-
-* Decreased influent COD (~100 mg/L COD), to achieve an influent COD:N of 10:3. 
 
 
 ```{r function and package set up, message = FALSE}
@@ -34,18 +29,17 @@ library(dplyr)
 
 ```{r import data}
 file_path <- "C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/cycle_results_2023.xlsx"
-choose_date <- "2023-03-23"
+choose_date <- "2023-03-13"
 
 df <- cycle_parse(file_path, choose_date)
 ```
 
 
-# Nutrient and carbon plot
 
 ```{r plotting params - phase labels and lines}
 
 
-ylim_custom <- 50 # set this after looking at the plot
+ylim_custom <- 100 # set this after looking at the plot
 
 phase_lines <- list(
   geom_vline(xintercept=1.65,color="grey"),
@@ -67,23 +61,22 @@ theme_defaults <- list(
 ```
 
 
-
-```{r in-cycle plot, preview = TRUE}
-plot_list <- c("phosphate", "nitrite", "propionate", "glucose")
+```{r in-cycle plot, warning = FALSE}
+plot_list <- c("phosphate", "nitrite", "acetate", "propionate", "glucose")
 
 custom_color <- scale_color_manual(name="Constituent",
                                    values=met.brewer("Hokusai1", 5),
                                    labels=c("Phosphate", "Nitrite",
-                                            "Propionate", "Glucose"))
+                                            "Acetate", "Propionate", "Glucose"))
 
 custom_shape <- scale_shape_manual(name="Constituent",
-                                   values=c(16, 17, 9, 12),
+                                   values=c(16, 17, 6, 5, 7),
                                    labels=c("Phosphate", "Nitrite",
-                                            "Propionate", "Glucose"))
+                                            "Acetate", "Propionate", "Glucose"))
 
 df %>% filter(variable %in% plot_list) %>%
   ggplot(data=.,aes(x=hour, y=value, color=variable, shape=variable)) +
-  geom_point(size=2, alpha = 0.9) +
+  geom_point(size=2, alpha=0.8) +
   custom_color +
   custom_shape +
   phase_lines +
@@ -96,11 +89,7 @@ df %>% filter(variable %in% plot_list) %>%
 
 Notes on in-cycle plot:
 
-* Great P release and anoxic uptake with higher nitrite dose
-* No re-release of P after denitrification
-* Almost complete P uptake in aerobic phase
+* Good P release and some anoxic uptake, followed by re-release - should increase NO2 dose
+* Rapid COD uptake in anaerobic phase
+* Most P uptake is aerobic
 
-
-Changes for next cycle:
-
-* Shorter anaerobic and aerobic phases - give as much time as possible to anoxic phase
