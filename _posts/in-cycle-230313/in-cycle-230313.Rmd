@@ -1,9 +1,7 @@
 ---
-title: "March 23 2023"
-description: In-cycle sampling on Thursday, March 23 2023
-categories:
-  - in-cycle
-date: 2023-03-23
+title: "March 13 2023"
+description: In-cycle sampling on Monday, March 13 2023
+date: 2023-03-13
 output:
   distill::distill_article:
     self_contained: true
@@ -14,8 +12,6 @@ output:
 
 
 Operational changes:
-
-* Decreased influent COD (~100 mg/L COD), to achieve an influent COD:N of 10:3. 
 
 
 ## Notebook set up
@@ -40,7 +36,9 @@ library(dplyr)
 file_path <- "C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/"
 excel_cycle <- "cycle_results_2023.xlsx"
 excel_solids <- "daily_weekly_measurements.xlsx"
-choose_date <- "2023-03-23"
+
+### choose date ###
+choose_date <- "2023-03-13" # change this date
 
 df <- cycle_parse(file.path(file_path, excel_cycle), choose_date)
 solids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)
@@ -52,7 +50,7 @@ solids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)
 
 ```{r plotting params - phase labels and lines}
 
-ylim_custom <- 50 # customize after looking at the plot
+ylim_custom <- round(max(df$value, na.rm = TRUE) + 10, 0) # customize after looking at the plot
 
 # dynamic phase lines
 phase_times <- df %>% group_by(phase) %>% summarise(t0 = min(hour))
@@ -104,14 +102,8 @@ df %>% filter(variable %in% plot_list) %>%
 
 Notes on in-cycle plot:
 
-* Great P release and anoxic uptake with higher nitrite dose
-* No re-release of P after denitrification
-* Almost complete P uptake in aerobic phase
-
-
-Changes for next cycle:
-
-* Shorter anaerobic and aerobic phases - give as much time as possible to anoxic phase
+* Rapid glucose and propionate uptake
+* P re-release after nitrite is depleted
 
 
 # Maximum rate calculations
@@ -140,12 +132,12 @@ ana_phos_rate <- abs(unname(coef(lm_ana_phos)["hour"]) / filter(solids, sample =
 The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**. 
 
 ## Denitrification rate & anoxic P uptake
-Based on the in-cycle plot, I will use the first 4 timepoints for this calculation.
+Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.
 
 ```{r denit rates}
 # get anoxic data
 anx_df <- df %>% 
-  filter(hour >= phase_times$t0[2] & hour < 3) %>%
+  filter(hour >= phase_times$t0[2] & hour < 2.2) %>%
   filter(variable %in% c("nitrite", "phosphate"))
 
 anx_nitrite_df <- anx_df %>% filter(variable == "nitrite")
