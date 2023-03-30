@@ -52,7 +52,7 @@ solids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)
 
 ```{r plotting params - phase labels and lines}
 
-ylim_custom <- 50 # customize after looking at the plot
+ylim_custom <- round(max(df$value, na.rm = TRUE) + 10, 0)  # customize after looking at the plot
 
 # dynamic phase lines
 phase_times <- df %>% group_by(phase) %>% summarise(t0 = min(hour))

@@ -1,6 +1,8 @@
 ---
 title: "March 13 2023"
 description: In-cycle sampling on Monday, March 13 2023
+categories:
+  - in-cycle
 date: 2023-03-13
 output:
   distill::distill_article:
