@@ -5,14 +5,14 @@
       "title": "About this analysis",
       "author": [],
       "contents": "\r\nThis website is a work in progress to document my CANDO+P analysis work in a somewhat cohesive way. I am particularly interested in being able to browse through R Markdown documents after they’ve been produced.\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-03-29T15:28:34-05:00"
+      "last_modified": "2023-04-02T10:25:39-05:00"
     },
     {
       "path": "index.html",
       "title": "CANDO+P analysis",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-03-29T15:28:35-05:00"
+      "last_modified": "2023-04-02T10:25:40-05:00"
     }
   ],
   "collections": ["posts/posts.json"]
