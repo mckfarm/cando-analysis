@@ -9,10 +9,6 @@ image: "230215_files/figure-html/in-cycle plot-1.png"
     
 ---
 
-
-Operational changes:
-
-
 ## Notebook set up
 
 ```{r function and package set up}

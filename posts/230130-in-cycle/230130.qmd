@@ -1,17 +1,19 @@
 ---
-title: "March 6 2023"
-description: In-cycle sampling on Monday, March 6 2023
+title: "January 30 2023"
+description: In-cycle sampling on Monday, January 30 2023
+image: "230130_files/figure-html/in-cycle plot-1.png"
+date: 2023-01-30
+date-modified: last-modified
 categories:
   - in-cycle
-date: 2023-03-06
-date-modified: last-modified
-image: "230306_files/figure-html/in-cycle plot-1.png"
-    
 ---
 
 ## Notebook set up
 
 ```{r function and package set up}
+### choose date 
+choose_date <- "2023-01-30" 
+
 options(scipen = 0, digits = 2)
 library(here)
 
@@ -34,8 +36,6 @@ file_path <- "C:/Users/mckyf/Northwestern University/Wells Research Group - CAND
 excel_cycle <- "cycle_results_2023.xlsx"
 excel_solids <- "daily_weekly_measurements.xlsx"
 
-### choose date ###
-choose_date <- "2023-03-06" # change this date
 
 df <- cycle_parse(file.path(file_path, excel_cycle), choose_date)
 solids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)
@@ -45,8 +45,7 @@ solids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)
 
 # In-cycle plot
 
-* Rapid glucose and propionate uptake
-* continuous aerobic P uptake
+* Sustained P uptake in anoxic phase
 
 ```{r in-cycle plot}
 
@@ -67,7 +66,7 @@ phase_labs <- list(
 )
 
 # pull colors and shapes
-plot_list <- c("phosphate", "nitrite", "propionate", "glucose") # this has to be in order
+plot_list <- c("phosphate", "nitrite", "propionate") # this has to be in order
 
 plot_palette <- palette_df %>% filter(vars %in% plot_list)
 
@@ -103,7 +102,7 @@ Maximum removal rates are calculated from the linear parts of the nutrient or ca
 
 ```{r denit rates}
 
-anx_denit_rate <- get_max_rate(df, "anx", "nitrite", 3, solids)
+anx_denit_rate <- get_max_rate(df, "anx", "nitrite", 5, solids)
 
 ```
 
@@ -113,8 +112,8 @@ The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**.
 ## P release and uptake rates
 ```{r P release and uptake rates}
 
-ana_phos_rate <- get_max_rate(df, "ana", "phosphate", 4, solids)
-anx_phos_rate <- get_max_rate(df, "anx", "phosphate", 3, solids)
+ana_phos_rate <- get_max_rate(df, "ana", "phosphate", 2, solids)
+anx_phos_rate <- get_max_rate(df, "anx", "phosphate", 5, solids)
 aer_phos_rate <- get_max_rate(df, "aer", "phosphate", 4, solids)
 
 ```
@@ -127,18 +126,16 @@ The maximum aerobic phosphorus uptake rate is **`r aer_phos_rate` mgP/gTSS/hour*
 ## Carbon uptake rates
 ```{r C uptake rates}
 
-ana_prop_rate <- get_max_rate(df, "ana", "propionate", 4, solids)
-ana_glu_rate <- get_max_rate(df, "ana", "glucose", 3, solids)
+ana_prop_rate <- get_max_rate(df, "ana", "propionate", 2, solids)
 
 ```
 
 The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.
-The maximum glucose uptake rate is **`r ana_glu_rate` mgCOD/gTSS/hour**.
 
 
 ```{r save rates to csv}
-rates_df <- tibble(rate = c("ana_phos", "anx_phos", "aer_phos", "anx_denit", "ana_prop", "ana_glu"),
-                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),
+rates_df <- tibble(rate = c("ana_phos", "anx_phos", "aer_phos", "anx_denit", "ana_prop"),
+                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate),
                    )
 
 # also save some important info - starting COD, N, P

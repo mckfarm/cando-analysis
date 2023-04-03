@@ -28,6 +28,8 @@ df <- list.files(here("data"), pattern = ".RDS", full.names = TRUE) %>%
   relocate(date)
 
 df$cod <- rowSums(df[,c("glucose", "propionate")], na.rm = TRUE)
+df$cod_n <- df$cod / df$nitrite
+df$cod_p <- df$cod / df$phosphate
 
 
 ```
@@ -44,6 +46,12 @@ df %>% filter(rate == "ana_phos") %>%
     theme_defaults +
     labs(x = "COD [mg/L]", y = "P release rate [mgP/gVSS/hr]", title = "P release rates")
 
+df %>% filter(rate == "ana_phos") %>% 
+  ggplot(data = ., aes(x = cod_p, y = value)) +
+    geom_point(size = 2) +
+    theme_defaults +
+    labs(x = "COD:P ratio", y = "P release rate [mgP/gVSS/hr]", title = "P release rates")
+
 
 ```
 
@@ -59,6 +67,14 @@ df %>% filter(rate %in% phos_rates) %>% mutate(rate = factor(rate, levels = phos
     labs(x = "COD [mg/L]", y = "P uptake rate [mgP/gVSS/hr]", title = "P uptake rates")
 
 
+df %>% filter(rate %in% phos_rates) %>% mutate(rate = factor(rate, levels = phos_rates)) %>%
+  ggplot(data = ., aes(x = cod_p, y = value, color = rate, shape = rate)) +
+    geom_point(size = 2) +
+    scale_color_manual(values = met.brewer("Java", 2)) + 
+    theme_defaults +
+    labs(x = "COD:P ratio", y = "P uptake rate [mgP/gVSS/hr]", title = "P uptake rates")
+
+
 ```
 
 
@@ -68,9 +84,16 @@ df %>% filter(rate %in% phos_rates) %>% mutate(rate = factor(rate, levels = phos
 
 df %>% filter(rate == "anx_denit") %>%
   ggplot(data = ., aes(x = cod, y = value)) +
-    geom_point() +
+    geom_point(size = 2) +
     theme_defaults +
     labs(x = "COD [mg/L]", y = "Denitrification rate [mgN/gVSS/hr]", title = "Denitrification rate [NO2]")
+
+
+df %>% filter(rate == "anx_denit") %>%
+  ggplot(data = ., aes(x = cod_n, y = value)) +
+    geom_point(size = 2) +
+    theme_defaults +
+    labs(x = "COD/N ratio", y = "Denitrification rate [mgN/gVSS/hr]", title = "Denitrification rate [NO2]")
 
 
 ```
