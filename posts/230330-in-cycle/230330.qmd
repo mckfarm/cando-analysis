@@ -63,7 +63,6 @@ df <- df %>%
 Here is the phosphorus and nitrite profile over the sampling period. Note that the nitrate concentration was minimal so was excluded from this plot. 
 
 ```{r in-cycle plot}
-#| classes: preview-image
 
 ## plotting params - phase labels and lines
 ylim_custom <- round(max(df$value, na.rm = TRUE) + 10, 0)
@@ -164,37 +163,42 @@ df_carbon %>% filter(variable %in% plot_list) %>%
 # Maximum rate calculations
 Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements. 
 
-
-## P release rate
-Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.
-
-```{r release rates}
-
-ana_phos_rate <- get_max_rate(df, "ana", "phosphate", 3, solids)
-
-```
-
-The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**. 
-
-## Denitrification rate & anoxic P uptake
-Based on the in-cycle plot, I will use the first 4 timepoints for this calculation.
+## Denitrification rate
 
 ```{r denit rates}
 
 anx_denit_rate <- get_max_rate(df, "anx", "nitrite", 4, solids)
+
+```
+
+The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**. 
+
+
+## P release and uptake rates
+```{r P release and uptake rates}
+
+ana_phos_rate <- get_max_rate(df, "ana", "phosphate", 3, solids)
 anx_phos_rate <- get_max_rate(df, "anx", "phosphate", 4, solids)
 
 ```
 
-
-The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**.  
+The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**.   
 The maximum anoxic phosphorus uptake rate is **`r anx_phos_rate` mgP/gTSS/hour**.  
+
+## Carbon uptake rates
+```{r C uptake rates}
+
+ana_prop_rate <- get_max_rate(df, "ana", "propionate", 3, solids)
+
+```
+
+The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.
 
 
 ```{r save rates to csv}
 
-rates_df <- tibble(rates = c("phos_rel", "phos_up", "nit_denit"),
-                   values = c(ana_phos_rate, anx_phos_rate, anx_denit_rate),
+rates_df <- tibble(rates = c("ana_phos", "anx_phos", "anx_denit", "ana_prop"),
+                   values = c(ana_phos_rate, anx_phos_rate, anx_denit_rate, ana_prop_rate),
                    date = choose_date)
 
 saveRDS(rates_df, file = here("data", paste0("rates-", choose_date, ".RDS")))

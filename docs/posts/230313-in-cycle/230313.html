@@ -206,11 +206,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#notebook-set-up" id="toc-notebook-set-up" class="nav-link active" data-scroll-target="#notebook-set-up">Notebook set up</a></li>
   <li><a href="#in-cycle-plot" id="toc-in-cycle-plot" class="nav-link" data-scroll-target="#in-cycle-plot">In-cycle plot</a></li>
-  <li><a href="#maximum-rate-calculations" id="toc-maximum-rate-calculations" class="nav-link" data-scroll-target="#maximum-rate-calculations">Maximum rate calculations</a>
+  <li><a href="#maximum-removal-rates" id="toc-maximum-removal-rates" class="nav-link" data-scroll-target="#maximum-removal-rates">Maximum removal rates</a>
   <ul class="collapse">
-  <li><a href="#p-release-rate" id="toc-p-release-rate" class="nav-link" data-scroll-target="#p-release-rate">P release rate</a></li>
-  <li><a href="#denitrification-rate-anoxic-p-uptake" id="toc-denitrification-rate-anoxic-p-uptake" class="nav-link" data-scroll-target="#denitrification-rate-anoxic-p-uptake">Denitrification rate &amp; anoxic P uptake</a></li>
-  <li><a href="#last-updated-on" id="toc-last-updated-on" class="nav-link" data-scroll-target="#last-updated-on">Last updated on</a></li>
+  <li><a href="#denitrification-rate" id="toc-denitrification-rate" class="nav-link" data-scroll-target="#denitrification-rate">Denitrification rate</a></li>
+  <li><a href="#p-release-and-uptake-rates" id="toc-p-release-and-uptake-rates" class="nav-link" data-scroll-target="#p-release-and-uptake-rates">P release and uptake rates</a></li>
+  <li><a href="#carbon-uptake-rates" id="toc-carbon-uptake-rates" class="nav-link" data-scroll-target="#carbon-uptake-rates">Carbon uptake rates</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -317,59 +317,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>P re-release after nitrite is depleted</li>
 </ul>
 </section>
-<section id="maximum-rate-calculations" class="level1">
-<h1>Maximum rate calculations</h1>
+<section id="maximum-removal-rates" class="level1">
+<h1>Maximum removal rates</h1>
 <p>Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements.</p>
-<section id="p-release-rate" class="level2">
-<h2 class="anchored" data-anchor-id="p-release-rate">P release rate</h2>
-<p>Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.</p>
+<section id="denitrification-rate" class="level2">
+<h2 class="anchored" data-anchor-id="denitrification-rate">Denitrification rate</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">3</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The maximum phosphate release rate is <strong>32.83 mgP/gTSS/hour</strong>.</p>
+<p>The maximum denitrification rate is <strong>5.67 mgN/gTSS/hour</strong>.</p>
 </section>
-<section id="denitrification-rate-anoxic-p-uptake" class="level2">
-<h2 class="anchored" data-anchor-id="denitrification-rate-anoxic-p-uptake">Denitrification rate &amp; anoxic P uptake</h2>
-<p>Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.</p>
+<section id="p-release-and-uptake-rates" class="level2">
+<h2 class="anchored" data-anchor-id="p-release-and-uptake-rates">P release and uptake rates</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rates normalized to biomass</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">3</span>, solids)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>anx_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>anx_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>aer_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate_custom_range</span>(df, <span class="st">"aer"</span>, <span class="st">"phosphate"</span>, <span class="dv">2</span>, <span class="dv">4</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The maximum denitrification rate is <strong>5.67 mgN/gTSS/hour</strong>.<br>
-The maximum anoxic phosphorus uptake rate is <strong>3.83 mgP/gTSS/hour</strong>.</p>
+<p>The maximum phosphate release rate is <strong>32.83 mgP/gTSS/hour</strong>.<br>
+The maximum anoxic phosphorus uptake rate is <strong>3.83 mgP/gTSS/hour</strong>.<br>
+The maximum aerobic phosphorus uptake rate is <strong>4.96 mgP/gTSS/hour</strong>.</p>
+</section>
+<section id="carbon-uptake-rates" class="level2">
+<h2 class="anchored" data-anchor-id="carbon-uptake-rates">Carbon uptake rates</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"phos_rel"</span>, <span class="st">"phos_up"</span>, <span class="st">"nit_denit"</span>),</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, anx_denit_rate),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ana_prop_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"propionate"</span>, <span class="dv">5</span>, solids)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ana_glu_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"glucose"</span>, <span class="dv">4</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-
-</section>
-
-<div id="quarto-appendix" class="default"><section id="last-updated-on" class="level2 appendix"><h2 class="quarto-appendix-heading">Last updated on</h2><div class="quarto-appendix-contents">
-
+<p>The maximum propionate uptake rate is <strong>28.47 mgCOD/gTSS/hour</strong>. The maximum glucose uptake rate is <strong>30.78 mgCOD/gTSS/hour</strong>.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2023-04-03"</code></pre>
-</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"ana_phos"</span>, <span class="st">"anx_phos"</span>, <span class="st">"aer_phos"</span>, <span class="st">"anx_denit"</span>, <span class="st">"ana_prop"</span>, <span class="st">"ana_glu"</span>),</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
 <!-- -->
 
-</div></section></div></main> <!-- /main -->
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -663,46 +665,56 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>P re-release after nitrite is depleted</span>
 <span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="fu"># Maximum rate calculations</span></span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements. </span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="fu"># Maximum removal rates</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements. </span>
 <span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## P release rate</span></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.</span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{r p release rate}</span></span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**. </span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Denitrification rate</span></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r denit rates}</span></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**. </span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Denitrification rate &amp; anoxic P uptake</span></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.</span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## P release and uptake rates</span></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r P release and uptake rates}</span></span>
 <span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r denit rates}</span></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="co"># rates normalized to biomass</span></span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">3</span>, solids)</span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>anx_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>anx_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>aer_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate_custom_range</span>(df, <span class="st">"aer"</span>, <span class="st">"phosphate"</span>, <span class="dv">2</span>, <span class="dv">4</span>, solids)</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**.  </span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>The maximum anoxic phosphorus uptake rate is **`r anx_phos_rate` mgP/gTSS/hour**.  </span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save rates to csv}</span></span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"phos_rel"</span>, <span class="st">"phos_up"</span>, <span class="st">"nit_denit"</span>),</span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, anx_denit_rate),</span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**.   </span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>The maximum anoxic phosphorus uptake rate is **`r anx_phos_rate` mgP/gTSS/hour**.  </span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>The maximum aerobic phosphorus uptake rate is **`r aer_phos_rate` mgP/gTSS/hour**.  </span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carbon uptake rates</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r C uptake rates}</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>ana_prop_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"propionate"</span>, <span class="dv">5</span>, solids)</span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>ana_glu_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"glucose"</span>, <span class="dv">4</span>, solids)</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.</span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>The maximum glucose uptake rate is **`r ana_glu_rate` mgCOD/gTSS/hour**.</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save rates to csv}</span></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"ana_phos"</span>, <span class="st">"anx_phos"</span>, <span class="st">"aer_phos"</span>, <span class="st">"anx_denit"</span>, <span class="st">"ana_prop"</span>, <span class="st">"ana_glu"</span>),</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

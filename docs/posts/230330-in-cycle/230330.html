@@ -212,9 +212,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#maximum-rate-calculations" id="toc-maximum-rate-calculations" class="nav-link" data-scroll-target="#maximum-rate-calculations">Maximum rate calculations</a>
   <ul class="collapse">
-  <li><a href="#p-release-rate" id="toc-p-release-rate" class="nav-link" data-scroll-target="#p-release-rate">P release rate</a></li>
-  <li><a href="#denitrification-rate-anoxic-p-uptake" id="toc-denitrification-rate-anoxic-p-uptake" class="nav-link" data-scroll-target="#denitrification-rate-anoxic-p-uptake">Denitrification rate &amp; anoxic P uptake</a></li>
-  <li><a href="#last-updated-on" id="toc-last-updated-on" class="nav-link" data-scroll-target="#last-updated-on">Last updated on</a></li>
+  <li><a href="#denitrification-rate" id="toc-denitrification-rate" class="nav-link" data-scroll-target="#denitrification-rate">Denitrification rate</a></li>
+  <li><a href="#p-release-and-uptake-rates" id="toc-p-release-and-uptake-rates" class="nav-link" data-scroll-target="#p-release-and-uptake-rates">P release and uptake rates</a></li>
+  <li><a href="#carbon-uptake-rates" id="toc-carbon-uptake-rates" class="nav-link" data-scroll-target="#carbon-uptake-rates">Carbon uptake rates</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -275,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="nutrient-profile" class="level2">
 <h2 class="anchored" data-anchor-id="nutrient-profile">Nutrient profile</h2>
 <p>Here is the phosphorus and nitrite profile over the sampling period. Note that the nitrate concentration was minimal so was excluded from this plot.</p>
-<div class="cell preview-image">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## plotting params - phase labels and lines</span></span>
@@ -380,55 +380,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="maximum-rate-calculations" class="level1">
 <h1>Maximum rate calculations</h1>
 <p>Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements.</p>
-<section id="p-release-rate" class="level2">
-<h2 class="anchored" data-anchor-id="p-release-rate">P release rate</h2>
-<p>Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.</p>
+<section id="denitrification-rate" class="level2">
+<h2 class="anchored" data-anchor-id="denitrification-rate">Denitrification rate</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">4</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The maximum phosphate release rate is <strong>10.84 mgP/gTSS/hour</strong>.</p>
+<p>The maximum denitrification rate is <strong>3.22 mgN/gTSS/hour</strong>.</p>
 </section>
-<section id="denitrification-rate-anoxic-p-uptake" class="level2">
-<h2 class="anchored" data-anchor-id="denitrification-rate-anoxic-p-uptake">Denitrification rate &amp; anoxic P uptake</h2>
-<p>Based on the in-cycle plot, I will use the first 4 timepoints for this calculation.</p>
+<section id="p-release-and-uptake-rates" class="level2">
+<h2 class="anchored" data-anchor-id="p-release-and-uptake-rates">P release and uptake rates</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">4</span>, solids)</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>anx_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"phosphate"</span>, <span class="dv">4</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The maximum denitrification rate is <strong>3.22 mgN/gTSS/hour</strong>.<br>
+<p>The maximum phosphate release rate is <strong>10.84 mgP/gTSS/hour</strong>.<br>
 The maximum anoxic phosphorus uptake rate is <strong>1.96 mgP/gTSS/hour</strong>.</p>
+</section>
+<section id="carbon-uptake-rates" class="level2">
+<h2 class="anchored" data-anchor-id="carbon-uptake-rates">Carbon uptake rates</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"phos_rel"</span>, <span class="st">"phos_up"</span>, <span class="st">"nit_denit"</span>),</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, anx_denit_rate),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ana_prop_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"propionate"</span>, <span class="dv">3</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-
-</section>
-
-<div id="quarto-appendix" class="default"><section id="last-updated-on" class="level2 appendix"><h2 class="quarto-appendix-heading">Last updated on</h2><div class="quarto-appendix-contents">
-
+<p>The maximum propionate uptake rate is <strong>15.25 mgCOD/gTSS/hour</strong>.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2023-04-03"</code></pre>
-</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"ana_phos"</span>, <span class="st">"anx_phos"</span>, <span class="st">"anx_denit"</span>, <span class="st">"ana_prop"</span>),</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, anx_denit_rate, ana_prop_rate),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
 <!-- -->
 
-</div></section></div></main> <!-- /main -->
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -678,143 +678,148 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>Here is the phosphorus and nitrite profile over the sampling period. Note that the nitrate concentration was minimal so was excluded from this plot. </span>
 <span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r in-cycle plot}</span></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| classes: preview-image</span></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="do">## plotting params - phase labels and lines</span></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>ylim_custom <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">max</span>(df<span class="sc">$</span>value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="dv">10</span>, <span class="dv">0</span>)</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co"># dynamic phase lines</span></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>phase_times <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(phase) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">t0 =</span> <span class="fu">min</span>(hour))</span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>phase_lines <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">filter</span>(phase_times, phase <span class="sc">==</span> <span class="st">"anx"</span>)<span class="sc">$</span>t0, <span class="at">color=</span><span class="st">"grey"</span>))</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="do">## plotting params - phase labels and lines</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>ylim_custom <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">max</span>(df<span class="sc">$</span>value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="dv">10</span>, <span class="dv">0</span>)</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co"># dynamic phase lines</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>phase_times <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(phase) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">t0 =</span> <span class="fu">min</span>(hour))</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>phase_lines <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">filter</span>(phase_times, phase <span class="sc">==</span> <span class="st">"anx"</span>)<span class="sc">$</span>t0, <span class="at">color=</span><span class="st">"grey"</span>))</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>phase_labs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(phase_times<span class="sc">$</span>t0[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anaerobic"</span>),</span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(<span class="fu">c</span>(phase_times<span class="sc">$</span>t0[<span class="dv">2</span>], <span class="fu">max</span>(df<span class="sc">$</span>hour))), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anoxic"</span>)</span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>phase_labs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(phase_times<span class="sc">$</span>t0[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anaerobic"</span>),</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(<span class="fu">c</span>(phase_times<span class="sc">$</span>t0[<span class="dv">2</span>], <span class="fu">max</span>(df<span class="sc">$</span>hour))), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anoxic"</span>)</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="co"># pull colors and shapes</span></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"phosphate"</span>, <span class="st">"nitrite"</span>) <span class="co"># this has to be in order</span></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>plot_palette <span class="ot">&lt;-</span> palette_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(vars <span class="sc">%in%</span> plot_list)</span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>custom_color <span class="ot">&lt;-</span> <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>colors,</span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>custom_shape <span class="ot">&lt;-</span> <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>shapes,</span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(variable <span class="sc">%in%</span> plot_list) <span class="sc">%&gt;%</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>.,<span class="fu">aes</span>(<span class="at">x=</span>hour, <span class="at">y=</span>value, <span class="at">color=</span>variable, <span class="at">shape=</span>variable)) <span class="sc">+</span></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">2.5</span>, <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>  custom_color <span class="sc">+</span></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>  custom_shape <span class="sc">+</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>  phase_lines <span class="sc">+</span></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>  theme_defaults <span class="sc">+</span></span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>  phase_labs <span class="sc">+</span></span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Concentration</span><span class="sc">\n</span><span class="st">[mgP/L or mgN/L]"</span>, <span class="at">x=</span><span class="st">"Hour"</span>) <span class="sc">+</span></span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, ylim_custom)</span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carbon profile</span></span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>This is the COD profile over the same time period. Glucose was not added to this in=cycle test. Note that the glycogen concentration is reported as **mg glucose as COD/g biomass**. This profile does not follow the expected glycogen profile of PAO and GAO, where glycogen would be depleted in the anaerobic phase and replenished in the anoxic phase. I am going to try the measurement again this coming week with a few adjustments - the protocol I used this week can be found <span class="co">[</span><span class="ot">here</span><span class="co">](https://mckennafarmer.notion.site/Glycogen-testing-d78b170286494ce695053984b7ba05c2)</span>. </span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>Adjustments for Monday, April 3rd: </span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Add biomass into the digestion tube to produce a final digestion ratio of 1 mg biomass per 1 mL 0.9 M HCl. My ratio ended up being closer to 0.35 mg biomass per 1 mL 0.9 M HCl, so glycogen may not have been hydrolysed completely in all samples.</span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Take biomass samples from the aerobic phase. I only took samples from the anaerobic and anoxic phases to test the method with fewer samples, so I will add aerobic timepoints to better understand the complete glycogen profile. </span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="co"># pull colors and shapes</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"phosphate"</span>, <span class="st">"nitrite"</span>) <span class="co"># this has to be in order</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>plot_palette <span class="ot">&lt;-</span> palette_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(vars <span class="sc">%in%</span> plot_list)</span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>custom_color <span class="ot">&lt;-</span> <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>colors,</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>custom_shape <span class="ot">&lt;-</span> <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>shapes,</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(variable <span class="sc">%in%</span> plot_list) <span class="sc">%&gt;%</span></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>.,<span class="fu">aes</span>(<span class="at">x=</span>hour, <span class="at">y=</span>value, <span class="at">color=</span>variable, <span class="at">shape=</span>variable)) <span class="sc">+</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">2.5</span>, <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>  custom_color <span class="sc">+</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>  custom_shape <span class="sc">+</span></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>  phase_lines <span class="sc">+</span></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>  theme_defaults <span class="sc">+</span></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>  phase_labs <span class="sc">+</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Concentration</span><span class="sc">\n</span><span class="st">[mgP/L or mgN/L]"</span>, <span class="at">x=</span><span class="st">"Hour"</span>) <span class="sc">+</span></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, ylim_custom)</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carbon profile</span></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>This is the COD profile over the same time period. Glucose was not added to this in=cycle test. Note that the glycogen concentration is reported as **mg glucose as COD/g biomass**. This profile does not follow the expected glycogen profile of PAO and GAO, where glycogen would be depleted in the anaerobic phase and replenished in the anoxic phase. I am going to try the measurement again this coming week with a few adjustments - the protocol I used this week can be found <span class="co">[</span><span class="ot">here</span><span class="co">](https://mckennafarmer.notion.site/Glycogen-testing-d78b170286494ce695053984b7ba05c2)</span>. </span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>Adjustments for Monday, April 3rd: </span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Add biomass into the digestion tube to produce a final digestion ratio of 1 mg biomass per 1 mL 0.9 M HCl. My ratio ended up being closer to 0.35 mg biomass per 1 mL 0.9 M HCl, so glycogen may not have been hydrolysed completely in all samples.</span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Take biomass samples from the aerobic phase. I only took samples from the anaerobic and anoxic phases to test the method with fewer samples, so I will add aerobic timepoints to better understand the complete glycogen profile. </span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r glycogen plot}</span></span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>df_gly <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"glucose"</span>)</span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate mg glycogen/g biomass</span></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>df_gly<span class="sc">$</span>value <span class="ot">&lt;-</span> df_gly<span class="sc">$</span>value <span class="sc">*</span> <span class="dv">3</span> <span class="sc">/</span> (solids<span class="sc">$</span>TSS <span class="sc">*</span> <span class="fl">0.015</span> <span class="sc">/</span> <span class="fl">0.010</span>)</span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>df_carbon <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df_gly, <span class="fu">subset</span>(df, variable <span class="sc">==</span> <span class="st">"propionate"</span>))</span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>ylim_custom <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># have to manually mess with this with the dual y axis</span></span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>phase_labs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(phase_times<span class="sc">$</span>t0[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anaerobic"</span>),</span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(<span class="fu">c</span>(phase_times<span class="sc">$</span>t0[<span class="dv">2</span>], <span class="fu">max</span>(df<span class="sc">$</span>hour))), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anoxic"</span>)</span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"propionate"</span>, <span class="st">"glucose"</span>)</span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>plot_palette <span class="ot">&lt;-</span> palette_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(vars <span class="sc">%in%</span> plot_list)</span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>custom_color <span class="ot">&lt;-</span> <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>colors,</span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>custom_shape <span class="ot">&lt;-</span> <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>shapes,</span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r glycogen plot}</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>df_gly <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"glucose"</span>)</span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate mg glycogen/g biomass</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>df_gly<span class="sc">$</span>value <span class="ot">&lt;-</span> df_gly<span class="sc">$</span>value <span class="sc">*</span> <span class="dv">3</span> <span class="sc">/</span> (solids<span class="sc">$</span>TSS <span class="sc">*</span> <span class="fl">0.015</span> <span class="sc">/</span> <span class="fl">0.010</span>)</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>df_carbon <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df_gly, <span class="fu">subset</span>(df, variable <span class="sc">==</span> <span class="st">"propionate"</span>))</span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>ylim_custom <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># have to manually mess with this with the dual y axis</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>phase_labs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(phase_times<span class="sc">$</span>t0[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anaerobic"</span>),</span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">mean</span>(<span class="fu">c</span>(phase_times<span class="sc">$</span>t0[<span class="dv">2</span>], <span class="fu">max</span>(df<span class="sc">$</span>hour))), <span class="at">y =</span> ylim_custom, <span class="at">label =</span> <span class="st">"anoxic"</span>)</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"propionate"</span>, <span class="st">"glucose"</span>)</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>plot_palette <span class="ot">&lt;-</span> palette_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(vars <span class="sc">%in%</span> plot_list)</span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>custom_color <span class="ot">&lt;-</span> <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>colors,</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>custom_shape <span class="ot">&lt;-</span> <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">"Constituent"</span>,</span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values=</span>plot_palette<span class="sc">$</span>shapes,</span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels=</span>plot_palette<span class="sc">$</span>labels)</span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>df_carbon <span class="sc">%&gt;%</span> <span class="fu">filter</span>(variable <span class="sc">%in%</span> plot_list) <span class="sc">%&gt;%</span></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data=</span>., <span class="fu">aes</span>(<span class="at">x=</span>hour, <span class="at">y=</span>value, <span class="at">color =</span> variable, <span class="at">shape =</span> variable)) <span class="sc">+</span></span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">2.5</span>) <span class="sc">+</span></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>    phase_lines <span class="sc">+</span></span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>    phase_labs <span class="sc">+</span> </span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>    custom_color <span class="sc">+</span> </span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>    custom_shape <span class="sc">+</span> </span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>    theme_defaults <span class="sc">+</span></span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"COD concentration</span><span class="sc">\n</span><span class="st">[mgCOD/L or mgCOD/gBiomass]"</span>, <span class="at">x=</span><span class="st">"Hour"</span>)</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>df_carbon <span class="sc">%&gt;%</span> <span class="fu">filter</span>(variable <span class="sc">%in%</span> plot_list) <span class="sc">%&gt;%</span></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data=</span>., <span class="fu">aes</span>(<span class="at">x=</span>hour, <span class="at">y=</span>value, <span class="at">color =</span> variable, <span class="at">shape =</span> variable)) <span class="sc">+</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>    phase_lines <span class="sc">+</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>    phase_labs <span class="sc">+</span> </span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>    custom_color <span class="sc">+</span> </span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>    custom_shape <span class="sc">+</span> </span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>    theme_defaults <span class="sc">+</span></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"COD concentration</span><span class="sc">\n</span><span class="st">[mgCOD/L or mgCOD/gBiomass]"</span>, <span class="at">x=</span><span class="st">"Hour"</span>)</span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a><span class="fu"># Maximum rate calculations</span></span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements. </span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a><span class="fu"># Maximum rate calculations</span></span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements. </span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## Denitrification rate</span></span>
 <span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## P release rate</span></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.</span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r release rates}</span></span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r denit rates}</span></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">4</span>, solids)</span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**. </span>
 <span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**. </span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## Denitrification rate &amp; anoxic P uptake</span></span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>Based on the in-cycle plot, I will use the first 4 timepoints for this calculation.</span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{r denit rates}</span></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## P release and uptake rates</span></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r P release and uptake rates}</span></span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>ana_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"phosphate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a>anx_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"phosphate"</span>, <span class="dv">4</span>, solids)</span>
 <span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>anx_denit_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"nitrite"</span>, <span class="dv">4</span>, solids)</span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>anx_phos_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"anx"</span>, <span class="st">"phosphate"</span>, <span class="dv">4</span>, solids)</span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**.   </span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a>The maximum anoxic phosphorus uptake rate is **`r anx_phos_rate` mgP/gTSS/hour**.  </span>
 <span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**.  </span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>The maximum anoxic phosphorus uptake rate is **`r anx_phos_rate` mgP/gTSS/hour**.  </span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carbon uptake rates</span></span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r C uptake rates}</span></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>ana_prop_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"propionate"</span>, <span class="dv">3</span>, solids)</span>
 <span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save rates to csv}</span></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"phos_rel"</span>, <span class="st">"phos_up"</span>, <span class="st">"nit_denit"</span>),</span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, anx_denit_rate),</span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a>The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.</span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save rates to csv}</span></span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rates =</span> <span class="fu">c</span>(<span class="st">"ana_phos"</span>, <span class="st">"anx_phos"</span>, <span class="st">"anx_denit"</span>, <span class="st">"ana_prop"</span>),</span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a>                   <span class="at">values =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, anx_denit_rate, ana_prop_rate),</span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date =</span> choose_date)</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
