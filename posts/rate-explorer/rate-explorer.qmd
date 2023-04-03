@@ -1,0 +1,77 @@
+---
+title: "Rate analysis"
+description: Looking at trends of maximum nutrient and carbon rates
+categories:
+  - in-cycle
+date: 2023-04-03
+date-modified: last-modified
+---
+
+
+```{r function and package set up}
+options(scipen = 0, digits = 2)
+library(here)
+
+# functions
+source(here("scripts", "plotting.R"))
+
+# packages
+library(MetBrewer)
+library(ggplot2)
+library(lubridate)
+library(dplyr)
+library(purrr)
+
+# data read in
+df <- list.files(here("data"), pattern = ".RDS", full.names = TRUE) %>%
+  map_dfr(readRDS) %>%
+  relocate(date)
+
+df$cod <- rowSums(df[,c("glucose", "propionate")], na.rm = TRUE)
+
+
+```
+
+
+# In terms of COD
+## P release and uptake rates
+
+```{r P release rates}
+
+df %>% filter(rate == "ana_phos") %>% 
+  ggplot(data = ., aes(x = cod, y = value)) +
+    geom_point(size = 2) +
+    theme_defaults +
+    labs(x = "COD [mg/L]", y = "P release rate [mgP/gVSS/hr]", title = "P release rates")
+
+
+```
+
+```{r P uptake rates}
+
+phos_rates <- c("anx_phos", "aer_phos")
+
+df %>% filter(rate %in% phos_rates) %>% mutate(rate = factor(rate, levels = phos_rates)) %>%
+  ggplot(data = ., aes(x = cod, y = value, color = rate, shape = rate)) +
+    geom_point(size = 2) +
+    scale_color_manual(values = met.brewer("Java", 2)) + 
+    theme_defaults +
+    labs(x = "COD [mg/L]", y = "P uptake rate [mgP/gVSS/hr]", title = "P uptake rates")
+
+
+```
+
+
+## Denitrification rates
+
+```{r N rates}
+
+df %>% filter(rate == "anx_denit") %>%
+  ggplot(data = ., aes(x = cod, y = value)) +
+    geom_point() +
+    theme_defaults +
+    labs(x = "COD [mg/L]", y = "Denitrification rate [mgN/gVSS/hr]", title = "Denitrification rate [NO2]")
+
+
+```
+

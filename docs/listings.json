@@ -2,9 +2,13 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/rate-explorer/rate-explorer.html",
       "/posts/230330-in-cycle/230330.html",
       "/posts/230323-in-cycle/230323.html",
-      "/posts/230313-in-cycle/230313.html"
+      "/posts/230313-in-cycle/230313.html",
+      "/posts/230306-in-cycle/230306.html",
+      "/posts/230220-in-cycle/230220.html",
+      "/posts/230215-in-cycle/230215.html"
     ]
   }
 ]

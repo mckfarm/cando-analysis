@@ -61,7 +61,7 @@ append_rates_df <- function(rates_df, df, choose_date){
   rates_df$glucose <- df %>% filter(variable == "glucose" & hour == 0) %>% .$value
   rates_df$propionate <- df %>% filter(variable == "propionate" & hour == 0) %>% .$value
   rates_df$phosphate <- df %>% filter(variable == "phosphate" & hour == 0) %>% .$value
-  rates_df$nitrite <- df %>% filter(variable == "phosphate" & phase == "anx") %>% slice(1) %>% .$value
+  rates_df$nitrite <- df %>% filter(variable == "nitrite" & phase == "anx") %>% slice(1) %>% .$value
   
   return(rates_df)
 }

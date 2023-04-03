@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Homepage",
     "section": "",
-    "text": "March 30 2023 glycogen test\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling with glycogen test on Thursday, March 30 3023\n\n\n\n\n\n\nMar 30, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 23 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Thursday, March 23 2023\n\n\n\n\n\n\nMar 23, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 13 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Monday, March 13 2023\n\n\n\n\n\n\nMar 13, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "Rate analysis\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nLooking at trends of maximum nutrient and carbon rates\n\n\n\n\n\n\nApr 3, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 30 2023 glycogen test\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling with glycogen test on Thursday, March 30 3023\n\n\n\n\n\n\nMar 30, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 23 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Thursday, March 23 2023\n\n\n\n\n\n\nMar 23, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 13 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Monday, March 13 2023\n\n\n\n\n\n\nMar 13, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 6 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Monday, March 6 2023\n\n\n\n\n\n\nMar 6, 2023\n\n\n\n\n\n\n  \n\n\n\n\nFeburary 20 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Monday, February 20 2023\n\n\n\n\n\n\nFeb 20, 2023\n\n\n\n\n\n\n  \n\n\n\n\nFeburary 15 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Wednesday, February 15 2023\n\n\n\n\n\n\nFeb 15, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -144,7 +144,7 @@
     "href": "posts/230330-in-cycle/230330.html#carbon-uptake-rates",
     "title": "March 30 2023 glycogen test",
     "section": "Carbon uptake rates",
-    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 3, solids)\n\n\nThe maximum propionate uptake rate is 15.25 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, NA, anx_denit_rate, ana_prop_rate, NA),\n                   )\n\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 3, solids)\n\n\nThe maximum propionate uptake rate is 15.25 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, NA, anx_denit_rate, ana_prop_rate, NA),\n                   )\n\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\nrates_df$glucose <- 0 # specifying here since glycogen is listed as glucose for plotting purposes, maybe retool this later\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
   },
   {
     "objectID": "posts/230323-in-cycle/230323.html#denitrification-rate",
@@ -187,5 +187,131 @@
     "title": "March 13 2023",
     "section": "Carbon uptake rates",
     "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 5, solids)\nana_glu_rate <- get_max_rate(df, \"ana\", \"glucose\", 4, solids)\n\n\nThe maximum propionate uptake rate is 28.47 mgCOD/gTSS/hour. The maximum glucose uptake rate is 30.78 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),\n                   )\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+  },
+  {
+    "objectID": "posts/rate-explorer/rate-explorer.html",
+    "href": "posts/rate-explorer/rate-explorer.html",
+    "title": "Rate analysis",
+    "section": "",
+    "text": "Code\noptions(scipen = 0, digits = 2)\nlibrary(here)\n\n# functions\nsource(here(\"scripts\", \"plotting.R\"))\n\n# packages\nlibrary(MetBrewer)\nlibrary(ggplot2)\nlibrary(lubridate)\nlibrary(dplyr)\nlibrary(purrr)\n\n# data read in\ndf <- list.files(here(\"data\"), pattern = \".RDS\", full.names = TRUE) %>%\n  map_dfr(readRDS) %>%\n  relocate(date)\n\ndf$cod <- rowSums(df[,c(\"glucose\", \"propionate\")], na.rm = TRUE)"
+  },
+  {
+    "objectID": "posts/230306-in-cycle/230306.html",
+    "href": "posts/230306-in-cycle/230306.html",
+    "title": "March 6 2023",
+    "section": "",
+    "text": "Operational changes:"
+  },
+  {
+    "objectID": "posts/230306-in-cycle/230306.html#notebook-set-up",
+    "href": "posts/230306-in-cycle/230306.html#notebook-set-up",
+    "title": "March 6 2023",
+    "section": "Notebook set up",
+    "text": "Notebook set up\n\n\nCode\noptions(scipen = 0, digits = 2)\nlibrary(here)\n\n# functions\nsource(here(\"scripts\", \"cycle_parsing.R\"))\nsource(here(\"scripts\", \"pull_solids.R\"))\nsource(here(\"scripts\", \"plotting.R\"))\nsource(here(\"scripts\", \"max_rates.R\"))\n\n# packages\nlibrary(MetBrewer)\nlibrary(ggplot2)\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(reshape2)\nlibrary(dplyr)\n\n# data\nfile_path <- \"C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/\"\nexcel_cycle <- \"cycle_results_2023.xlsx\"\nexcel_solids <- \"daily_weekly_measurements.xlsx\"\n\n### choose date ###\nchoose_date <- \"2023-03-06\" # change this date\n\ndf <- cycle_parse(file.path(file_path, excel_cycle), choose_date)\nsolids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)"
+  },
+  {
+    "objectID": "posts/230306-in-cycle/230306.html#denitrification-rate",
+    "href": "posts/230306-in-cycle/230306.html#denitrification-rate",
+    "title": "March 6 2023",
+    "section": "Denitrification rate",
+    "text": "Denitrification rate\n\n\nCode\nanx_denit_rate <- get_max_rate(df, \"anx\", \"nitrite\", 3, solids)\n\n\nThe maximum denitrification rate is 3.35 mgN/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230306-in-cycle/230306.html#p-release-and-uptake-rates",
+    "href": "posts/230306-in-cycle/230306.html#p-release-and-uptake-rates",
+    "title": "March 6 2023",
+    "section": "P release and uptake rates",
+    "text": "P release and uptake rates\n\n\nCode\nana_phos_rate <- get_max_rate(df, \"ana\", \"phosphate\", 4, solids)\nanx_phos_rate <- get_max_rate(df, \"anx\", \"phosphate\", 3, solids)\naer_phos_rate <- get_max_rate(df, \"aer\", \"phosphate\", 4, solids)\n\n\nThe maximum phosphate release rate is 8.47 mgP/gTSS/hour.\nThe maximum anoxic phosphorus uptake rate is 1.95 mgP/gTSS/hour.\nThe maximum aerobic phosphorus uptake rate is 3.3 mgP/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230306-in-cycle/230306.html#carbon-uptake-rates",
+    "href": "posts/230306-in-cycle/230306.html#carbon-uptake-rates",
+    "title": "March 6 2023",
+    "section": "Carbon uptake rates",
+    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 4, solids)\nana_glu_rate <- get_max_rate(df, \"ana\", \"glucose\", 3, solids)\n\n\nThe maximum propionate uptake rate is 14.43 mgCOD/gTSS/hour. The maximum glucose uptake rate is 61.84 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),\n                   )\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+  },
+  {
+    "objectID": "posts/230220-in-cycle/230220.html",
+    "href": "posts/230220-in-cycle/230220.html",
+    "title": "Feburary 20 2023",
+    "section": "",
+    "text": "Operational changes:"
+  },
+  {
+    "objectID": "posts/230220-in-cycle/230220.html#notebook-set-up",
+    "href": "posts/230220-in-cycle/230220.html#notebook-set-up",
+    "title": "Feburary 20 2023",
+    "section": "Notebook set up",
+    "text": "Notebook set up\n\n\nCode\noptions(scipen = 0, digits = 2)\nlibrary(here)\n\n# functions\nsource(here(\"scripts\", \"cycle_parsing.R\"))\nsource(here(\"scripts\", \"pull_solids.R\"))\nsource(here(\"scripts\", \"plotting.R\"))\nsource(here(\"scripts\", \"max_rates.R\"))\n\n# packages\nlibrary(MetBrewer)\nlibrary(ggplot2)\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(reshape2)\nlibrary(dplyr)\n\n# data\nfile_path <- \"C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/\"\nexcel_cycle <- \"cycle_results_2023.xlsx\"\nexcel_solids <- \"daily_weekly_measurements.xlsx\"\n\n### choose date ###\nchoose_date <- \"2023-02-20\" # change this date\n\ndf <- cycle_parse(file.path(file_path, excel_cycle), choose_date)\nsolids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)"
+  },
+  {
+    "objectID": "posts/230220-in-cycle/230220.html#denitrification-rate",
+    "href": "posts/230220-in-cycle/230220.html#denitrification-rate",
+    "title": "Feburary 20 2023",
+    "section": "Denitrification rate",
+    "text": "Denitrification rate\n\n\nCode\nanx_denit_rate <- get_max_rate(df, \"anx\", \"nitrite\", 3, solids)\n\n\nThe maximum denitrification rate is 4.03 mgN/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230220-in-cycle/230220.html#p-release-and-uptake-rates",
+    "href": "posts/230220-in-cycle/230220.html#p-release-and-uptake-rates",
+    "title": "Feburary 20 2023",
+    "section": "P release and uptake rates",
+    "text": "P release and uptake rates\n\n\nCode\nana_phos_rate <- get_max_rate(df, \"ana\", \"phosphate\", 5, solids)\nanx_phos_rate <- get_max_rate(df, \"anx\", \"phosphate\", 3, solids)\naer_phos_rate <- get_max_rate(df, \"aer\", \"phosphate\", 4, solids)\n\n\nThe maximum phosphate release rate is 2.61 mgP/gTSS/hour.\nThe maximum anoxic phosphorus uptake rate is 4.55 mgP/gTSS/hour.\nThe maximum aerobic phosphorus uptake rate is 1.03 mgP/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230220-in-cycle/230220.html#carbon-uptake-rates",
+    "href": "posts/230220-in-cycle/230220.html#carbon-uptake-rates",
+    "title": "Feburary 20 2023",
+    "section": "Carbon uptake rates",
+    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 2, solids)\n\n\nThe maximum propionate uptake rate is 32.75 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\"),\n                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate),\n                   )\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+  },
+  {
+    "objectID": "posts/rate-explorer/rate-explorer.html#p-release-and-uptake-rates",
+    "href": "posts/rate-explorer/rate-explorer.html#p-release-and-uptake-rates",
+    "title": "Rate analysis",
+    "section": "P release and uptake rates",
+    "text": "P release and uptake rates\n\n\nCode\ndf %>% filter(rate == \"ana_phos\") %>% \n  ggplot(data = ., aes(x = cod, y = value)) +\n    geom_point(size = 2) +\n    theme_defaults +\n    labs(x = \"COD [mg/L]\", y = \"P release rate [mgP/gVSS/hr]\", title = \"P release rates\")\n\n\n\n\n\n\n\nCode\nphos_rates <- c(\"anx_phos\", \"aer_phos\")\n\ndf %>% filter(rate %in% phos_rates) %>% mutate(rate = factor(rate, levels = phos_rates)) %>%\n  ggplot(data = ., aes(x = cod, y = value, color = rate, shape = rate)) +\n    geom_point(size = 2) +\n    scale_color_manual(values = met.brewer(\"Java\", 2)) + \n    theme_defaults +\n    labs(x = \"COD [mg/L]\", y = \"P uptake rate [mgP/gVSS/hr]\", title = \"P uptake rates\")"
+  },
+  {
+    "objectID": "posts/rate-explorer/rate-explorer.html#denitrification-rates",
+    "href": "posts/rate-explorer/rate-explorer.html#denitrification-rates",
+    "title": "Rate analysis",
+    "section": "Denitrification rates",
+    "text": "Denitrification rates\n\n\nCode\ndf %>% filter(rate == \"anx_denit\") %>%\n  ggplot(data = ., aes(x = cod, y = value)) +\n    geom_point() +\n    theme_defaults +\n    labs(x = \"COD [mg/L]\", y = \"Denitrification rate [mgN/gVSS/hr]\", title = \"Denitrification rate [NO2]\")"
+  },
+  {
+    "objectID": "posts/230215-in-cycle/230215.html",
+    "href": "posts/230215-in-cycle/230215.html",
+    "title": "Feburary 15 2023",
+    "section": "",
+    "text": "Operational changes:"
+  },
+  {
+    "objectID": "posts/230215-in-cycle/230215.html#notebook-set-up",
+    "href": "posts/230215-in-cycle/230215.html#notebook-set-up",
+    "title": "Feburary 15 2023",
+    "section": "Notebook set up",
+    "text": "Notebook set up\n\n\nCode\n### choose date \nchoose_date <- \"2023-02-15\" \n\noptions(scipen = 0, digits = 2)\nlibrary(here)\n\n# functions\nsource(here(\"scripts\", \"cycle_parsing.R\"))\nsource(here(\"scripts\", \"pull_solids.R\"))\nsource(here(\"scripts\", \"plotting.R\"))\nsource(here(\"scripts\", \"max_rates.R\"))\n\n# packages\nlibrary(MetBrewer)\nlibrary(ggplot2)\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(reshape2)\nlibrary(dplyr)\n\n# data\nfile_path <- \"C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/\"\nexcel_cycle <- \"cycle_results_2023.xlsx\"\nexcel_solids <- \"daily_weekly_measurements.xlsx\"\n\n\ndf <- cycle_parse(file.path(file_path, excel_cycle), choose_date)\nsolids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)"
+  },
+  {
+    "objectID": "posts/230215-in-cycle/230215.html#denitrification-rate",
+    "href": "posts/230215-in-cycle/230215.html#denitrification-rate",
+    "title": "Feburary 15 2023",
+    "section": "Denitrification rate",
+    "text": "Denitrification rate\n\n\nCode\nanx_denit_rate <- get_max_rate(df, \"anx\", \"nitrite\", 4, solids)\n\n\nThe maximum denitrification rate is 2.93 mgN/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230215-in-cycle/230215.html#p-release-and-uptake-rates",
+    "href": "posts/230215-in-cycle/230215.html#p-release-and-uptake-rates",
+    "title": "Feburary 15 2023",
+    "section": "P release and uptake rates",
+    "text": "P release and uptake rates\n\n\nCode\nana_phos_rate <- get_max_rate(df, \"ana\", \"phosphate\", 2, solids)\nanx_phos_rate <- get_max_rate(df, \"anx\", \"phosphate\", 4, solids)\naer_phos_rate <- get_max_rate(df, \"aer\", \"phosphate\", 3, solids)\n\n\nThe maximum phosphate release rate is 11.95 mgP/gTSS/hour.\nThe maximum anoxic phosphorus uptake rate is 1.12 mgP/gTSS/hour.\nThe maximum aerobic phosphorus uptake rate is 3.09 mgP/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230215-in-cycle/230215.html#carbon-uptake-rates",
+    "href": "posts/230215-in-cycle/230215.html#carbon-uptake-rates",
+    "title": "Feburary 15 2023",
+    "section": "Carbon uptake rates",
+    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 3, solids)\nana_glu_rate <- get_max_rate(df, \"ana\", \"glucose\", 2, solids)\n\n\nThe maximum propionate uptake rate is 20.53 mgCOD/gTSS/hour. The maximum glucose uptake rate is 38.24 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),\n                   )\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
   }
 ]
