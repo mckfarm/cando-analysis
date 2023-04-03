@@ -1,0 +1,128 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Homepage",
+    "section": "",
+    "text": "March 30 2023 glycogen test\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling with glycogen test on Thursday, March 30 3023\n\n\n\n\n\n\nMar 30, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 23 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Thursday, March 23 2023\n\n\n\n\n\n\nMar 23, 2023\n\n\n\n\n\n\n  \n\n\n\n\nMarch 13 2023\n\n\n\n\n\n\n\nin-cycle\n\n\n\n\nIn-cycle sampling on Monday, March 13 2023\n\n\n\n\n\n\nMar 13, 2023\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "This website is a work in progress to document my CANDO+P analysis work."
+  },
+  {
+    "objectID": "posts/230313-in-cycle/230313.html",
+    "href": "posts/230313-in-cycle/230313.html",
+    "title": "March 13 2023",
+    "section": "",
+    "text": "Operational changes:"
+  },
+  {
+    "objectID": "posts/230313-in-cycle/230313.html#notebook-set-up",
+    "href": "posts/230313-in-cycle/230313.html#notebook-set-up",
+    "title": "March 13 2023",
+    "section": "Notebook set up",
+    "text": "Notebook set up\n\n\nCode\noptions(scipen = 0, digits = 2)\nlibrary(here)\n\n# functions\nsource(here(\"scripts\", \"cycle_parsing.R\"))\nsource(here(\"scripts\", \"pull_solids.R\"))\nsource(here(\"scripts\", \"plotting.R\"))\nsource(here(\"scripts\", \"max_rates.R\"))\n\n# packages\nlibrary(MetBrewer)\nlibrary(ggplot2)\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(reshape2)\nlibrary(dplyr)\n\n# data\nfile_path <- \"C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/\"\nexcel_cycle <- \"cycle_results_2023.xlsx\"\nexcel_solids <- \"daily_weekly_measurements.xlsx\"\n\n### choose date ###\nchoose_date <- \"2023-03-13\" # change this date\n\ndf <- cycle_parse(file.path(file_path, excel_cycle), choose_date)\nsolids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)"
+  },
+  {
+    "objectID": "posts/230313-in-cycle/230313.html#p-release-rate",
+    "href": "posts/230313-in-cycle/230313.html#p-release-rate",
+    "title": "March 13 2023",
+    "section": "P release rate",
+    "text": "P release rate\nBased on the in-cycle plot, I will use the first 3 timepoints for this calculation.\n\n\nCode\nana_phos_rate <- get_max_rate(df, \"ana\", \"phosphate\", 3, solids)\n\n\nThe maximum phosphate release rate is 32.83 mgP/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230313-in-cycle/230313.html#denitrification-rate-anoxic-p-uptake",
+    "href": "posts/230313-in-cycle/230313.html#denitrification-rate-anoxic-p-uptake",
+    "title": "March 13 2023",
+    "section": "Denitrification rate & anoxic P uptake",
+    "text": "Denitrification rate & anoxic P uptake\nBased on the in-cycle plot, I will use the first 3 timepoints for this calculation.\n\n\nCode\n# rates normalized to biomass\nanx_denit_rate <- get_max_rate(df, \"anx\", \"nitrite\", 3, solids)\nanx_phos_rate <- get_max_rate(df, \"anx\", \"phosphate\", 3, solids)\n\n\nThe maximum denitrification rate is 5.67 mgN/gTSS/hour.\nThe maximum anoxic phosphorus uptake rate is 3.83 mgP/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rates = c(\"phos_rel\", \"phos_up\", \"nit_denit\"),\n                   values = c(ana_phos_rate, anx_phos_rate, anx_denit_rate),\n                   date = choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+  },
+  {
+    "objectID": "posts/230313-in-cycle/230313.html#last-updated-on",
+    "href": "posts/230313-in-cycle/230313.html#last-updated-on",
+    "title": "March 13 2023",
+    "section": "Last updated on",
+    "text": "Last updated on\n\n\n\n[1] \"2023-04-03\""
+  },
+  {
+    "objectID": "posts/230323-in-cycle/230323.html",
+    "href": "posts/230323-in-cycle/230323.html",
+    "title": "March 23 2023",
+    "section": "",
+    "text": "Operational changes:"
+  },
+  {
+    "objectID": "posts/230323-in-cycle/230323.html#notebook-set-up",
+    "href": "posts/230323-in-cycle/230323.html#notebook-set-up",
+    "title": "March 23 2023",
+    "section": "Notebook set up",
+    "text": "Notebook set up\n\n\nCode\noptions(scipen = 0, digits = 2)\n\nlibrary(here)\n\n# functions\nsource(here(\"scripts\", \"cycle_parsing.R\"))\nsource(here(\"scripts\", \"pull_solids.R\"))\nsource(here(\"scripts\", \"plotting.R\"))\nsource(here(\"scripts\", \"max_rates.R\"))\n\n# packages\nlibrary(MetBrewer)\nlibrary(ggplot2)\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(reshape2)\nlibrary(dplyr)\n\n# data\nfile_path <- \"C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/\"\nexcel_cycle <- \"cycle_results_2023.xlsx\"\nexcel_solids <- \"daily_weekly_measurements.xlsx\"\nchoose_date <- \"2023-03-23\"\n\ndf <- cycle_parse(file.path(file_path, excel_cycle), choose_date)\nsolids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)"
+  },
+  {
+    "objectID": "posts/230323-in-cycle/230323.html#p-release-rate",
+    "href": "posts/230323-in-cycle/230323.html#p-release-rate",
+    "title": "March 23 2023",
+    "section": "P release rate",
+    "text": "P release rate\nBased on the in-cycle plot, I will use the first 3 timepoints for this calculation.\n\n\nCode\nana_phos_rate <- get_max_rate(df, \"ana\", \"phosphate\", 3, solids)\n\n\nThe maximum phosphate release rate is 8.64 mgP/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230323-in-cycle/230323.html#denitrification-rate-anoxic-p-uptake",
+    "href": "posts/230323-in-cycle/230323.html#denitrification-rate-anoxic-p-uptake",
+    "title": "March 23 2023",
+    "section": "Denitrification rate & anoxic P uptake",
+    "text": "Denitrification rate & anoxic P uptake\nBased on the in-cycle plot, I will use the first 4 timepoints for this calculation.\n\n\nCode\nanx_denit_rate <- get_max_rate(df, \"anx\", \"nitrite\", 4, solids)\nanx_phos_rate <- get_max_rate(df, \"anx\", \"phosphate\", 4, solids)\n\n\nThe maximum denitrification rate is 4.2 mgN/gTSS/hour.\nThe maximum anoxic phosphorus uptake rate is 1.75 mgP/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rates = c(\"phos_rel\", \"phos_up\", \"nit_denit\"),\n                   values = c(ana_phos_rate, anx_phos_rate, anx_denit_rate),\n                   date = choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+  },
+  {
+    "objectID": "posts/230330-in-cycle/230330.html",
+    "href": "posts/230330-in-cycle/230330.html",
+    "title": "March 30 2023 glycogen test",
+    "section": "",
+    "text": "This week I tested the glycogen extraction and measurement with some in-cycle samples. Samples for glycogen analysis were collected during the anaerobic and anoxic phases of the reactor cycle. A rough draft of the protocol used for the glycogen extraction and measurement can be found here."
+  },
+  {
+    "objectID": "posts/230330-in-cycle/230330.html#notebook-set-up",
+    "href": "posts/230330-in-cycle/230330.html#notebook-set-up",
+    "title": "March 30 2023 glycogen test",
+    "section": "Notebook set up",
+    "text": "Notebook set up\n\n\nCode\noptions(scipen = 0, digits = 2)\nlibrary(here)\n\n# functions\n# functions\nsource(here(\"scripts\", \"cycle_parsing.R\"))\nsource(here(\"scripts\", \"pull_solids.R\"))\nsource(here(\"scripts\", \"plotting.R\"))\nsource(here(\"scripts\", \"max_rates.R\"))\n\n# packages\nlibrary(MetBrewer)\nlibrary(ggplot2)\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(reshape2)\nlibrary(dplyr)\n\n# misc.\nbase_path <- \"C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/\" \n# data\nfile_path <- \"In-cycle sampling\"\nexcel_cycle <- \"230330_gly_cycletest.xlsx\"\nexcel_solids <- \"daily_weekly_measurements.xlsx\"\nchoose_date <- \"2023-03-30\"\n\ndf <- read_excel(file.path(base_path, file_path, excel_cycle))\nsolids <- get_recent_tss(file.path(base_path, excel_solids), choose_date)\n\n\n# light parsing\ndf <- df %>% \n  mutate(hour = time_length(interval(min(time), time), \"hour\")) %>%\n  select(-c(date, time)) %>%\n  filter(phase %in% c(\"ana\", \"anx\")) %>%\n  melt(id = c(\"hour\", \"phase\"))"
+  },
+  {
+    "objectID": "posts/230330-in-cycle/230330.html#nutrient-profile",
+    "href": "posts/230330-in-cycle/230330.html#nutrient-profile",
+    "title": "March 30 2023 glycogen test",
+    "section": "Nutrient profile",
+    "text": "Nutrient profile\nHere is the phosphorus and nitrite profile over the sampling period. Note that the nitrate concentration was minimal so was excluded from this plot.\n\n\nCode\n## plotting params - phase labels and lines\nylim_custom <- round(max(df$value, na.rm = TRUE) + 10, 0)\n\n# dynamic phase lines\nphase_times <- df %>% group_by(phase) %>% summarise(t0 = min(hour))\n\nphase_lines <- list(\n  geom_vline(xintercept = filter(phase_times, phase == \"anx\")$t0, color=\"grey\"))\n\n\nphase_labs <- list(\n  annotate(\"text\", x = mean(phase_times$t0[1:2]), y = ylim_custom, label = \"anaerobic\"),\n  annotate(\"text\", x = mean(c(phase_times$t0[2], max(df$hour))), y = ylim_custom, label = \"anoxic\")\n)\n\n\n# pull colors and shapes\nplot_list <- c(\"phosphate\", \"nitrite\") # this has to be in order\n\nplot_palette <- palette_df %>% filter(vars %in% plot_list)\n\ncustom_color <- scale_color_manual(name=\"Constituent\",\n                                   values=plot_palette$colors,\n                                   labels=plot_palette$labels)\n\ncustom_shape <- scale_shape_manual(name=\"Constituent\",\n                                   values=plot_palette$shapes,\n                                   labels=plot_palette$labels)\n\ndf %>% filter(variable %in% plot_list) %>%\n  ggplot(data=.,aes(x=hour, y=value, color=variable, shape=variable)) +\n  geom_point(size=2.5, alpha = 0.9) +\n  custom_color +\n  custom_shape +\n  phase_lines +\n  theme_defaults +\n  phase_labs +\n  labs(y=\"Concentration\\n[mgP/L or mgN/L]\", x=\"Hour\") +\n  ylim(0, ylim_custom)"
+  },
+  {
+    "objectID": "posts/230330-in-cycle/230330.html#carbon-profile",
+    "href": "posts/230330-in-cycle/230330.html#carbon-profile",
+    "title": "March 30 2023 glycogen test",
+    "section": "Carbon profile",
+    "text": "Carbon profile\nThis is the COD profile over the same time period. Glucose was not added to this in=cycle test. Note that the glycogen concentration is reported as mg glucose as COD/g biomass. This profile does not follow the expected glycogen profile of PAO and GAO, where glycogen would be depleted in the anaerobic phase and replenished in the anoxic phase. I am going to try the measurement again this coming week with a few adjustments - the protocol I used this week can be found here.\nAdjustments for Monday, April 3rd:\n\nAdd biomass into the digestion tube to produce a final digestion ratio of 1 mg biomass per 1 mL 0.9 M HCl. My ratio ended up being closer to 0.35 mg biomass per 1 mL 0.9 M HCl, so glycogen may not have been hydrolysed completely in all samples.\nTake biomass samples from the aerobic phase. I only took samples from the anaerobic and anoxic phases to test the method with fewer samples, so I will add aerobic timepoints to better understand the complete glycogen profile.\n\n\n\nCode\ndf_gly <- df %>% filter(variable == \"glucose\")\n\n# calculate mg glycogen/g biomass\ndf_gly$value <- df_gly$value * 3 / (solids$TSS * 0.015 / 0.010)\n\ndf_carbon <- rbind(df_gly, subset(df, variable == \"propionate\"))\n\nylim_custom <- 20 # have to manually mess with this with the dual y axis\n\nphase_labs <- list(\n  annotate(\"text\", x = mean(phase_times$t0[1:2]), y = ylim_custom, label = \"anaerobic\"),\n  annotate(\"text\", x = mean(c(phase_times$t0[2], max(df$hour))), y = ylim_custom, label = \"anoxic\")\n)\n\nplot_list <- c(\"propionate\", \"glucose\")\n\nplot_palette <- palette_df %>% filter(vars %in% plot_list)\n\ncustom_color <- scale_color_manual(name=\"Constituent\",\n                                   values=plot_palette$colors,\n                                   labels=plot_palette$labels)\n\ncustom_shape <- scale_shape_manual(name=\"Constituent\",\n                                   values=plot_palette$shapes,\n                                   labels=plot_palette$labels)\n\n\ndf_carbon %>% filter(variable %in% plot_list) %>%\n    ggplot(data=., aes(x=hour, y=value, color = variable, shape = variable)) +\n    geom_point(size=2.5) +\n    phase_lines +\n    phase_labs + \n    custom_color + \n    custom_shape + \n    theme_defaults +\n    labs(y=\"COD concentration\\n[mgCOD/L or mgCOD/gBiomass]\", x=\"Hour\")"
+  },
+  {
+    "objectID": "posts/230330-in-cycle/230330.html#p-release-rate",
+    "href": "posts/230330-in-cycle/230330.html#p-release-rate",
+    "title": "March 30 2023 glycogen test",
+    "section": "P release rate",
+    "text": "P release rate\nBased on the in-cycle plot, I will use the first 3 timepoints for this calculation.\n\n\nCode\nana_phos_rate <- get_max_rate(df, \"ana\", \"phosphate\", 3, solids)\n\n\nThe maximum phosphate release rate is 10.84 mgP/gTSS/hour."
+  },
+  {
+    "objectID": "posts/230330-in-cycle/230330.html#denitrification-rate-anoxic-p-uptake",
+    "href": "posts/230330-in-cycle/230330.html#denitrification-rate-anoxic-p-uptake",
+    "title": "March 30 2023 glycogen test",
+    "section": "Denitrification rate & anoxic P uptake",
+    "text": "Denitrification rate & anoxic P uptake\nBased on the in-cycle plot, I will use the first 4 timepoints for this calculation.\n\n\nCode\nanx_denit_rate <- get_max_rate(df, \"anx\", \"nitrite\", 4, solids)\nanx_phos_rate <- get_max_rate(df, \"anx\", \"phosphate\", 4, solids)\n\n\nThe maximum denitrification rate is 3.22 mgN/gTSS/hour.\nThe maximum anoxic phosphorus uptake rate is 1.96 mgP/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rates = c(\"phos_rel\", \"phos_up\", \"nit_denit\"),\n                   values = c(ana_phos_rate, anx_phos_rate, anx_denit_rate),\n                   date = choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+  },
+  {
+    "objectID": "posts/230330-in-cycle/230330.html#last-updated-on",
+    "href": "posts/230330-in-cycle/230330.html#last-updated-on",
+    "title": "March 30 2023 glycogen test",
+    "section": "Last updated on",
+    "text": "Last updated on\n\n\n\n[1] \"2023-04-03\""
+  }
+]
