@@ -1,0 +1,156 @@
+---
+title: "March 23 2023"
+description: In-cycle sampling on Thursday, March 23 2023
+categories:
+  - in-cycle
+date: 2023-03-23
+date-modified: last-modified
+image: "230323_files/figure-html/in-cycle plot-1.png"
+    
+---
+
+
+Operational changes:
+
+* Decreased influent COD (~100 mg/L COD), to achieve an influent COD:N of 10:3. 
+
+
+## Notebook set up
+
+```{r function and package set up}
+options(scipen = 0, digits = 2)
+
+library(here)
+
+# functions
+source(here("scripts", "cycle_parsing.R"))
+source(here("scripts", "pull_solids.R"))
+source(here("scripts", "plotting.R"))
+source(here("scripts", "max_rates.R"))
+
+# packages
+library(MetBrewer)
+library(ggplot2)
+library(readxl)
+library(lubridate)
+library(reshape2)
+library(dplyr)
+
+# data
+file_path <- "C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/"
+excel_cycle <- "cycle_results_2023.xlsx"
+excel_solids <- "daily_weekly_measurements.xlsx"
+choose_date <- "2023-03-23"
+
+df <- cycle_parse(file.path(file_path, excel_cycle), choose_date)
+solids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)
+
+```
+
+
+# In-cycle plot
+
+```{r plotting params - phase labels and lines}
+
+ylim_custom <- round(max(df$value, na.rm = TRUE) + 10, 0)  # customize after looking at the plot
+
+# dynamic phase lines
+phase_times <- df %>% group_by(phase) %>% summarise(t0 = min(hour))
+
+phase_lines <- list(
+  geom_vline(xintercept = filter(phase_times, phase == "anx")$t0, color="grey"),
+  geom_vline(xintercept = filter(phase_times, phase == "aer")$t0, color="grey"))
+
+
+phase_labs <- list(
+  annotate("text", x = mean(phase_times$t0[1:2]), y = ylim_custom, label = "anaerobic"),
+  annotate("text", x = mean(phase_times$t0[2:3]), y = ylim_custom, label = "anoxic"),
+  annotate("text", x = mean(c(phase_times$t0[3], max(df$hour))), y = ylim_custom, label = "aerobic")
+)
+
+
+```
+
+
+
+```{r in-cycle plot}
+
+# pull colors and shapes
+plot_list <- c("phosphate", "nitrite", "propionate", "glucose") # this has to be in order
+
+plot_palette <- palette_df %>% filter(vars %in% plot_list)
+
+custom_color <- scale_color_manual(name="Constituent",
+                                   values=plot_palette$colors,
+                                   labels=plot_palette$labels)
+
+custom_shape <- scale_shape_manual(name="Constituent",
+                                   values=plot_palette$shapes,
+                                   labels=plot_palette$labels)
+
+
+df %>% filter(variable %in% plot_list) %>%
+  ggplot(data=.,aes(x=hour, y=value, color=variable, shape=variable)) +
+  geom_point(size=2.5, alpha = 0.9) +
+  custom_color +
+  custom_shape +
+  phase_lines +
+  theme_defaults +
+  phase_labs +
+  labs(y="Concentration\n[mgP/L, mgN/L, mgCOD/L]", x="Hour") +
+  ylim(0, ylim_custom)
+
+```
+
+Notes on in-cycle plot:
+
+* Great P release and anoxic uptake with higher nitrite dose
+* No re-release of P after denitrification
+* Almost complete P uptake in aerobic phase
+
+
+Changes for next cycle:
+
+* Shorter anaerobic and aerobic phases - give as much time as possible to anoxic phase
+
+
+# Maximum rate calculations
+Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements. 
+
+
+## P release rate
+Based on the in-cycle plot, I will use the first 3 timepoints for this calculation.
+
+```{r p release rate}
+
+ana_phos_rate <- get_max_rate(df, "ana", "phosphate", 3, solids)
+
+```
+
+The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**. 
+
+## Denitrification rate & anoxic P uptake
+Based on the in-cycle plot, I will use the first 4 timepoints for this calculation.
+
+```{r denit rates}
+
+anx_denit_rate <- get_max_rate(df, "anx", "nitrite", 4, solids)
+anx_phos_rate <- get_max_rate(df, "anx", "phosphate", 4, solids)
+
+```
+
+
+The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**.  
+The maximum anoxic phosphorus uptake rate is **`r anx_phos_rate` mgP/gTSS/hour**.  
+
+
+```{r save rates to csv}
+
+rates_df <- tibble(rates = c("phos_rel", "phos_up", "nit_denit"),
+                   values = c(ana_phos_rate, anx_phos_rate, anx_denit_rate),
+                   date = choose_date)
+
+saveRDS(rates_df, file = here("data", paste0("rates-", choose_date, ".RDS")))
+
+```
+

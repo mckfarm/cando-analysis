@@ -1,7 +1,0 @@
----
-title: "About this analysis"
-description: |
-  
----
-
-This website is a work in progress to document my CANDO+P analysis work in a somewhat cohesive way. I am particularly interested in being able to browse through R Markdown documents after they've been produced.
