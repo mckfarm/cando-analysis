@@ -144,7 +144,7 @@
     "href": "posts/230330-in-cycle/230330.html#carbon-uptake-rates",
     "title": "March 30 2023 glycogen test",
     "section": "Carbon uptake rates",
-    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 3, solids)\n\n\nThe maximum propionate uptake rate is 15.25 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rates = c(\"ana_phos\", \"anx_phos\", \"anx_denit\", \"ana_prop\"),\n                   values = c(ana_phos_rate, anx_phos_rate, anx_denit_rate, ana_prop_rate),\n                   date = choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 3, solids)\n\n\nThe maximum propionate uptake rate is 15.25 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, NA, anx_denit_rate, ana_prop_rate, NA),\n                   )\n\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
   },
   {
     "objectID": "posts/230323-in-cycle/230323.html#denitrification-rate",
@@ -165,7 +165,7 @@
     "href": "posts/230323-in-cycle/230323.html#carbon-uptake-rates",
     "title": "March 23 2023",
     "section": "Carbon uptake rates",
-    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 3, solids)\nana_glu_rate <- get_max_rate(df, \"ana\", \"glucose\", 2, solids)\n\n\nThe maximum propionate uptake rate is 32.34 mgCOD/gTSS/hour. The maximum glucose uptake rate is 64.99 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rates = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   values = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),\n                   date = choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 3, solids)\nana_glu_rate <- get_max_rate(df, \"ana\", \"glucose\", 2, solids)\n\n\nThe maximum propionate uptake rate is 32.34 mgCOD/gTSS/hour. The maximum glucose uptake rate is 64.99 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),\n                   )\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
   },
   {
     "objectID": "posts/230313-in-cycle/230313.html#denitrification-rate",
@@ -186,6 +186,6 @@
     "href": "posts/230313-in-cycle/230313.html#carbon-uptake-rates",
     "title": "March 13 2023",
     "section": "Carbon uptake rates",
-    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 5, solids)\nana_glu_rate <- get_max_rate(df, \"ana\", \"glucose\", 4, solids)\n\n\nThe maximum propionate uptake rate is 28.47 mgCOD/gTSS/hour. The maximum glucose uptake rate is 30.78 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rates = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   values = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),\n                   date = choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
+    "text": "Carbon uptake rates\n\n\nCode\nana_prop_rate <- get_max_rate(df, \"ana\", \"propionate\", 5, solids)\nana_glu_rate <- get_max_rate(df, \"ana\", \"glucose\", 4, solids)\n\n\nThe maximum propionate uptake rate is 28.47 mgCOD/gTSS/hour. The maximum glucose uptake rate is 30.78 mgCOD/gTSS/hour.\n\n\nCode\nrates_df <- tibble(rate = c(\"ana_phos\", \"anx_phos\", \"aer_phos\", \"anx_denit\", \"ana_prop\", \"ana_glu\"),\n                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate, ana_glu_rate),\n                   )\n\n# also save some important info - starting COD, N, P\nrates_df <- append_rates_df(rates_df, df, choose_date)\n\nsaveRDS(rates_df, file = here(\"data\", paste0(\"rates-\", choose_date, \".RDS\")))"
   }
 ]
