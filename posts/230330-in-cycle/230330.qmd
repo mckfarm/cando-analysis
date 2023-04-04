@@ -119,7 +119,7 @@ Adjustments for Monday, April 3rd:
 
 ```{r glycogen plot}
 
-df_gly <- df %>% filter(variable == "glucose")
+df_gly <- df %>% filter(variable == "glycogen")
 
 # calculate mg glycogen/g biomass
 df_gly$value <- df_gly$value * 3 / (solids$TSS * 0.015 / 0.010)
@@ -133,7 +133,7 @@ phase_labs <- list(
   annotate("text", x = mean(c(phase_times$t0[2], max(df$hour))), y = ylim_custom, label = "anoxic")
 )
 
-plot_list <- c("propionate", "glucose")
+plot_list <- c("propionate", "glycogen")
 
 plot_palette <- palette_df %>% filter(vars %in% plot_list)
 
@@ -203,8 +203,7 @@ rates_df <- tibble(rate = c("ana_phos", "anx_phos", "aer_phos", "anx_denit", "an
 
 
 # also save some important info - starting COD, N, P
-rates_df <- append_rates_df(rates_df, df, choose_date)
-rates_df$glucose <- 0 # specifying here since glycogen is listed as glucose for plotting purposes, maybe retool this later
+rates_df <- append_rates_df(rates_df, df, choose_date)# specifying here since glycogen is listed as glucose for plotting purposes, maybe retool this later
 
 saveRDS(rates_df, file = here("data", paste0("rates-", choose_date, ".RDS")))
 

@@ -25,12 +25,13 @@ cycle_parse <- function(file_path, choose_date){
                                levels=c("ana", "anx", "aer"))
   
   df_parsed$variable <- factor(df_parsed$variable,
-                               levels=c("OP_mgPL","NO2_mgNL","NO3_mgNL",
-                                        "Ace_mgCODL","Pr_mgCODL","Glu_mgCODL"))
+                               levels=c("OP_mgPL", "NO2_mgNL", "NO3_mgNL",
+                                        "Ace_mgCODL", "Pr_mgCODL", "Glu_mgCODL", "Gly_mgCODL"))
   
   df_parsed$variable <- recode_factor(df_parsed$variable,
                                       OP_mgPL = "phosphate", NO2_mgNL = "nitrite", NO3_mgNL = "nitrate", 
-                                      Ace_mgCODL = "acetate", Pr_mgCODL = "propionate", Glu_mgCODL = "glucose")
+                                      Ace_mgCODL = "acetate", Pr_mgCODL = "propionate", "Glu_mgCODL" = "glucose", 
+                                      Gly_mgCODL = "glycogen")
   
   return (df_parsed)
   

@@ -3,6 +3,7 @@ title: "Rate analysis"
 description: Looking at trends of maximum nutrient and carbon rates
 categories:
   - in-cycle
+  - compilation
 date: 2023-04-03
 date-modified: last-modified
 ---
@@ -46,12 +47,6 @@ df %>% filter(rate == "ana_phos") %>%
     theme_defaults +
     labs(x = "COD [mg/L]", y = "P release rate [mgP/gVSS/hr]", title = "P release rates")
 
-df %>% filter(rate == "ana_phos") %>% 
-  ggplot(data = ., aes(x = cod_p, y = value)) +
-    geom_point(size = 2) +
-    theme_defaults +
-    labs(x = "COD:P ratio", y = "P release rate [mgP/gVSS/hr]", title = "P release rates")
-
 
 ```
 
@@ -61,18 +56,18 @@ phos_rates <- c("anx_phos", "aer_phos")
 
 df %>% filter(rate %in% phos_rates) %>% mutate(rate = factor(rate, levels = phos_rates)) %>%
   ggplot(data = ., aes(x = cod, y = value, color = rate, shape = rate)) +
-    geom_point(size = 2) +
+    geom_point(size = 2, alpha = 0.8) +
     scale_color_manual(values = met.brewer("Java", 2)) + 
     theme_defaults +
     labs(x = "COD [mg/L]", y = "P uptake rate [mgP/gVSS/hr]", title = "P uptake rates")
 
 
 df %>% filter(rate %in% phos_rates) %>% mutate(rate = factor(rate, levels = phos_rates)) %>%
-  ggplot(data = ., aes(x = cod_p, y = value, color = rate, shape = rate)) +
-    geom_point(size = 2) +
+  ggplot(data = ., aes(x = nitrite, y = value, color = rate, shape = rate)) +
+    geom_point(size = 2, alpha = 0.8) +
     scale_color_manual(values = met.brewer("Java", 2)) + 
     theme_defaults +
-    labs(x = "COD:P ratio", y = "P uptake rate [mgP/gVSS/hr]", title = "P uptake rates")
+    labs(x = "Influent NO2 [mgN/L]", y = "P uptake rate [mgP/gVSS/hr]", title = "P uptake rates")
 
 
 ```
@@ -93,7 +88,7 @@ df %>% filter(rate == "anx_denit") %>%
   ggplot(data = ., aes(x = cod_n, y = value)) +
     geom_point(size = 2) +
     theme_defaults +
-    labs(x = "COD/N ratio", y = "Denitrification rate [mgN/gVSS/hr]", title = "Denitrification rate [NO2]")
+    labs(x = "COD:N ratio", y = "Denitrification rate [mgN/gVSS/hr]", title = "Denitrification rate [NO2]")
 
 
 ```
