@@ -190,9 +190,6 @@ The maximum aerobic phosphorus uptake rate is **`r aer_phos_rate` mgP/gTSS/hour*
 
 ## Carbon uptake rates
 
-One thing to note with the C uptake rates is that I had dosed ~40 mgCOD/L each of glucose and propionate, but the measured concentrations are a bit below this. 
-
-
 ```{r C uptake rates}
 
 ana_prop_rate <- get_max_rate(df, "ana", "propionate", 3, solids)
@@ -200,7 +197,7 @@ ana_glu_rate <- get_max_rate(df, "ana", "glucose", 2, solids)
 
 ```
 
-The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.
+The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.  
 The maximum glucose uptake rate is **`r ana_glu_rate` mgCOD/gTSS/hour**.
 
 
