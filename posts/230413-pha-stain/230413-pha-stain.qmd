@@ -1,0 +1,24 @@
+---
+title: "PHA stain method 4/13/23"
+description: PHA staining method used on April 13th 2023
+categories:
+  - methods
+date: 2023-04-13
+date-modified: last-modified
+---
+
+1. Collect 5 mL of biomass at designated timepoints and fix at 4C for at least 2 hours
+  + Prepare 5 mL tubes beforehand with 0.5 mL of 37% paraformaldehyde in each
+  + Put in walk in fridge for at least 2 hours per sample, can be left overnight  
+  + Note that this is the same procedure as biomass fixation for glycogen
+  
+2. Decant excess formaldehyde liquid and set aside sample for staining
+  + Centrifuge for 10 minutes at 5000 rpm
+  + Decant, then add 5 mL of DI to each tube
+  + Resuspend pellet and aliquot 0.5 mL of mixture into an eppendorf tube
+  
+3. Prepare Nile Blue A staining solution - 0.02% w/v in ethanol
+  
+4. Add 0.5 mL staining solution to each eppendorf  
+
+5. Stain for 3 minutes at room temperature, then dispense into plate (200 uL) and read at excitation 360 and emission 460. 
