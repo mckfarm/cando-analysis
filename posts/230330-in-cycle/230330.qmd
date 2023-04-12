@@ -9,7 +9,7 @@ image: "230330_files/figure-html/in-cycle plot-1.png"
     
 ---
 
-This week I tested the glycogen extraction and measurement with some in-cycle samples. Samples for glycogen analysis were collected during the anaerobic and anoxic phases of the reactor cycle. A rough draft of the protocol used for the glycogen extraction and measurement can be found [here](https://mckennafarmer.notion.site/Glycogen-testing-d78b170286494ce695053984b7ba05c2). 
+This week I tested the glycogen extraction and measurement with some in-cycle samples. Samples for glycogen analysis were collected during the anaerobic and anoxic phases of the reactor cycle. A rough draft of the protocol used for the glycogen extraction and measurement can be found [here](/posts/230330-glycogen-test/230330-glycogen-test.qmd). 
 
 
 ## Notebook set up

@@ -408,7 +408,6 @@ The maximum aerobic phosphorus uptake rate is <strong>0.53 mgP/gTSS/hour</strong
 </section>
 <section id="carbon-uptake-rates" class="level2">
 <h2 class="anchored" data-anchor-id="carbon-uptake-rates">Carbon uptake rates</h2>
-<p>One thing to note with the C uptake rates is that I had dosed ~40 mgCOD/L each of glucose and propionate, but the measured concentrations are a bit below this.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -416,7 +415,8 @@ The maximum aerobic phosphorus uptake rate is <strong>0.53 mgP/gTSS/hour</strong
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ana_glu_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"glucose"</span>, <span class="dv">2</span>, solids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The maximum propionate uptake rate is <strong>19.74 mgCOD/gTSS/hour</strong>. The maximum glucose uptake rate is <strong>18.21 mgCOD/gTSS/hour</strong>.</p>
+<p>The maximum propionate uptake rate is <strong>19.74 mgCOD/gTSS/hour</strong>.<br>
+The maximum glucose uptake rate is <strong>18.21 mgCOD/gTSS/hour</strong>.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -814,32 +814,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carbon uptake rates</span></span>
 <span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a>One thing to note with the C uptake rates is that I had dosed ~40 mgCOD/L each of glucose and propionate, but the measured concentrations are a bit below this. </span>
+<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r C uptake rates}</span></span>
 <span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r C uptake rates}</span></span>
+<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a>ana_prop_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"propionate"</span>, <span class="dv">3</span>, solids)</span>
+<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a>ana_glu_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"glucose"</span>, <span class="dv">2</span>, solids)</span>
 <span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a>ana_prop_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"propionate"</span>, <span class="dv">3</span>, solids)</span>
-<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a>ana_glu_rate <span class="ot">&lt;-</span> <span class="fu">get_max_rate</span>(df, <span class="st">"ana"</span>, <span class="st">"glucose"</span>, <span class="dv">2</span>, solids)</span>
-<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a>The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.  </span>
+<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a>The maximum glucose uptake rate is **`r ana_glu_rate` mgCOD/gTSS/hour**.</span>
 <span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a>The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.</span>
-<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a>The maximum glucose uptake rate is **`r ana_glu_rate` mgCOD/gTSS/hour**.</span>
-<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save rates to csv}</span></span>
-<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rate =</span> <span class="fu">c</span>(<span class="st">"ana_phos"</span>, <span class="st">"anx_phos"</span>, <span class="st">"aer_phos"</span>, <span class="st">"anx_denit"</span>, <span class="st">"ana_prop"</span>),</span>
-<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a>                   <span class="at">value =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate),</span>
-<span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save rates to csv}</span></span>
+<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">rate =</span> <span class="fu">c</span>(<span class="st">"ana_phos"</span>, <span class="st">"anx_phos"</span>, <span class="st">"aer_phos"</span>, <span class="st">"anx_denit"</span>, <span class="st">"ana_prop"</span>),</span>
+<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a>                   <span class="at">value =</span> <span class="fu">c</span>(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate),</span>
+<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a><span class="co"># also save some important info - starting COD, N, P</span></span>
+<span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">append_rates_df</span>(rates_df, df, choose_date)</span>
 <span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a><span class="co"># also save some important info - starting COD, N, P</span></span>
-<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a>rates_df <span class="ot">&lt;-</span> <span class="fu">append_rates_df</span>(rates_df, df, choose_date)</span>
-<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span>
-<span id="cb9-217"><a href="#cb9-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-218"><a href="#cb9-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rates_df, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="fu">paste0</span>(<span class="st">"rates-"</span>, choose_date, <span class="st">".RDS"</span>)))</span>
+<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
