@@ -1,0 +1,35 @@
+---
+title: "Glycogen method 4/04/23"
+description: Glycogen extraction and measurement method used on March 4 2023
+categories:
+  - methods
+date: 2023-04-04
+date-modified: last-modified
+---
+
+
+1. Collect 5 mL of biomass at designated timepoints and fix at 4C for at least 2 hours
+  + Prepare 5 mL tubes beforehand with 0.2 mL of 37% paraformaldehyde
+  + Put in walk in fridge for at least 2 hours per sample  
+  
+2. Decant excess formaldehyde liquid
+  + Centrifuge for 10 minutes at 5000 rpm
+  + Decant, then add 10 mL of DI to each tube
+  + Mix up biomass and DI water with cell spreader
+  + Save the remaining biomass for storage (centrifuge again and decant, then store in -20C freezer)  
+  
+3. Prepare digestion tubes
+  + Pipette 0.5 mL of mixed biomass + DI into glass vials
+  + Pipette 3 mL of 0.9 M HCl into each vial
+  + Also prepare a blank with 1 mL DI + 2 mL HCl (same DI used for washing)  
+  
+4. Digest at 100C for 2 hours  
+
+5. Cool in ice bath, then add 0.1 mL of 9 M NaOH to each tube to balance pH  
+
+6. Prepare for glucose measurement via Sigma glucose absorbance kit 
+  + Measure glucose concentration at 340 nm with 80 uL reagent, 30 uL sample
+  
+  
+See handwritten notes below for more info:
+![](method.jpg)

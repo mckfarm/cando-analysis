@@ -1,0 +1,212 @@
+---
+title: "April 13 2023"
+description: In-cycle sampling on Thursday, April 13 2023
+image: "230404_files/figure-html/in-cycle plot-1.png"
+date: 2023-04-13
+date-modified: last-modified
+categories:
+  - in-cycle
+---
+
+
+## Notebook set up
+
+```{r function and package set up}
+### choose date 
+choose_date <- "2023-04-13" 
+
+options(scipen = 0, digits = 2)
+library(here)
+
+# functions
+source(here("scripts", "cycle_parsing.R"))
+source(here("scripts", "pull_solids.R"))
+source(here("scripts", "plotting.R"))
+source(here("scripts", "max_rates.R"))
+
+# packages
+library(MetBrewer)
+library(ggplot2)
+library(readxl)
+library(lubridate)
+library(reshape2)
+library(dplyr)
+
+# data
+file_path <- "C:/Users/mckyf/Northwestern University/Wells Research Group - CANDO+P Reactor/04 Performance data/"
+excel_cycle <- "cycle_results_2023.xlsx"
+excel_solids <- "daily_weekly_measurements.xlsx"
+
+
+df <- cycle_parse(file.path(file_path, excel_cycle), choose_date)
+solids <- get_recent_tss(file.path(file_path, excel_solids), choose_date)
+
+```
+
+
+
+```{r glycogen calculation}
+
+df <- df %>% 
+  mutate(value = ifelse(variable == "glycogen", 
+                        value * (3 + 0.3 + 0.5) / (filter(solids, sample == "ml")$TSS * 5), 
+                        value))
+
+```
+
+
+# In-cycle plots
+## All data
+
+A few observations: 
+
+* The COD is consumed rapidly during the anaerobic phase, within about 15 minutes of starting the cycle test
+* I technically dosed 40 mgCOD/L each of propionate and glucose but this isn't reflected in the measurements, possible due to incomplete mixing at the beginning of the test or rapid COD uptake.
+* Not quite complete denitrification, but the influent COD:N was quite low (theoretically should have been 2:1). 
+```{r in-cycle plot}
+
+ylim_custom <- round(max(df$value, na.rm = TRUE) + 10, 0)
+
+# dynamic phase lines
+phase_times <- df %>% group_by(phase) %>% summarise(t0 = min(hour))
+
+phase_lines <- list(
+  geom_vline(xintercept = filter(phase_times, phase == "anx")$t0, color="grey"),
+  geom_vline(xintercept = filter(phase_times, phase == "aer")$t0, color="grey"))
+
+
+phase_labs <- list(
+  annotate("text", x = mean(phase_times$t0[1:2]), y = ylim_custom, label = "anaerobic"),
+  annotate("text", x = mean(phase_times$t0[2:3]), y = ylim_custom, label = "anoxic"),
+  annotate("text", x = mean(c(phase_times$t0[3], max(df$hour))), y = ylim_custom, label = "aerobic")
+)
+
+# pull colors and shapes
+plot_list <- c("phosphate", "nitrite", "propionate", "glucose") # this has to be in order
+
+plot_palette <- palette_df %>% filter(vars %in% plot_list)
+
+custom_color <- scale_color_manual(name="Constituent",
+                                   values=plot_palette$colors,
+                                   labels=plot_palette$labels)
+
+custom_shape <- scale_shape_manual(name="Constituent",
+                                   values=plot_palette$shapes,
+                                   labels=plot_palette$labels)
+
+
+df %>% filter(variable %in% plot_list) %>%
+  ggplot(data=.,aes(x=hour, y=value, color=variable, shape=variable)) +
+  geom_point(size=2.5, alpha = 0.9) +
+  custom_color +
+  custom_shape +
+  phase_lines +
+  theme_defaults +
+  phase_labs +
+  labs(y="Concentration\n[mgP/L, mgN/L, mgCOD/L]", x="Hour") +
+  ylim(0, ylim_custom)
+
+```
+## Glycogen profile
+
+
+
+```{r carbon plot}
+
+ylim_custom <- 10
+
+# dynamic phase lines
+
+phase_labs <- list(
+  annotate("text", x = mean(phase_times$t0[1:2]), y = ylim_custom, label = "anaerobic"),
+  annotate("text", x = mean(phase_times$t0[2:3]), y = ylim_custom, label = "anoxic"),
+  annotate("text", x = mean(c(phase_times$t0[3], max(df$hour))), y = ylim_custom, label = "aerobic")
+)
+
+# pull colors and shapes
+plot_list <- c("glycogen") # this has to be in order
+
+plot_palette <- palette_df %>% filter(vars %in% plot_list)
+
+custom_color <- scale_color_manual(name="Constituent",
+                                   values=plot_palette$colors,
+                                   labels=plot_palette$labels)
+
+custom_shape <- scale_shape_manual(name="Constituent",
+                                   values=plot_palette$shapes,
+                                   labels=plot_palette$labels)
+
+df %>% filter(variable %in% plot_list) %>%
+  ggplot(data=.,aes(x=hour, y=value, color=variable, shape=variable)) +
+  geom_point(size=2.5, alpha = 0.9) +
+  custom_color +
+  custom_shape +
+  phase_lines + 
+  phase_labs + 
+  theme_defaults + 
+  ylim(3, ylim_custom) + 
+  labs(y="Concentration\n[mgGlycogen/gBiomass]", x="Hour")
+
+```
+
+
+
+# Maximum removal rates
+
+Maximum removal rates are calculated from the linear parts of the nutrient or carbon profile. Rates are normalized to solids measurements. 
+
+## Denitrification rate
+
+The denitrification rate was steady over the entire anoxic period, and nitrite was mostly depleted by the end of the phase. 
+
+```{r denit rates}
+
+anx_denit_rate <- get_max_rate(df, "anx", "nitrite", 5, solids)
+
+```
+
+The maximum denitrification rate is **`r anx_denit_rate` mgN/gTSS/hour**. 
+
+
+## P release and uptake rates
+
+The P release rate was rapid during the anaerobic phase, corresponding with a very quick glucose and propionate uptake rate. The P uptake was steady over both the anoxic and aerobic phases.
+
+```{r P release and uptake rates}
+
+ana_phos_rate <- get_max_rate(df, "ana", "phosphate", 3, solids)
+anx_phos_rate <- get_max_rate(df, "aer", "phosphate", 6, solids)
+aer_phos_rate <- get_max_rate(df, "aer", "phosphate", 4, solids)
+
+```
+
+The maximum phosphate release rate is **`r ana_phos_rate` mgP/gTSS/hour**.   
+The maximum anoxic phosphorus uptake rate is **`r anx_phos_rate` mgP/gTSS/hour**.  
+The maximum aerobic phosphorus uptake rate is **`r aer_phos_rate` mgP/gTSS/hour**.  
+
+
+## Carbon uptake rates
+
+```{r C uptake rates}
+
+ana_prop_rate <- get_max_rate(df, "ana", "propionate", 2, solids)
+ana_glu_rate <- get_max_rate(df, "ana", "glucose", 2, solids)
+
+```
+
+The maximum propionate uptake rate is **`r ana_prop_rate` mgCOD/gTSS/hour**.  
+The maximum glucose uptake rate is **`r ana_glu_rate` mgCOD/gTSS/hour**.
+
+
+
+```{r save rates to csv}
+rates_df <- tibble(rate = c("ana_phos", "anx_phos", "aer_phos", "anx_denit", "ana_prop"),
+                   value = c(ana_phos_rate, anx_phos_rate, aer_phos_rate, anx_denit_rate, ana_prop_rate),
+                   )
+
+# also save some important info - starting COD, N, P
+rates_df <- append_rates_df(rates_df, df, choose_date)
+
+saveRDS(rates_df, file = here("data", paste0("rates-", choose_date, ".RDS")))
+
+```
